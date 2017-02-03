@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>D3 World Map</title>
+      
+      
+      <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+	<link rel="icon" href="../dist/img/favicon.ico">
+        
+        <!--CSS file for implicit styles-->
+    <link href="../delCss/myStyles1.css" rel="stylesheet">
+    
+              <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <!--<script src="https://code.highcharts.com/maps/highmaps.js"></script>-->
+        <!--<script src="http://code.highcharts.com/maps/modules/map.js"></script>-->
+        <!--Map js file ==<script src="http://code.highcharts.com/maps/modules/map.js"></script>-->
+             <script src="../js/map.src.js"></script>
+<script src="https://code.highcharts.com/maps/modules/data.js"></script>
+        <!--<script src="https://code.highcharts.com/maps/modules/drilldown.js"></script>-->
+        <script src="https://code.highcharts.com/mapdata/countries/us/us-all.js"></script>
+         <!--DrillDown js file-->
+             <script src="../js/myDrillDown.js"></script>
+
+<link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  </head>
+    <body>
+    <div onclick="doclick();">Click Me</div>
+<div id="message">Recorded <b>0</b> clicks</div>
+    </body>
+    <script>
+        var times = 0;
+        function doclick() {
+    times++;
+    location.hash = times;
+}
+window.onhashchange = function() {       
+    if (location.hash.length > 0) {        
+        times = parseInt(location.hash.replace('#',''));     
+    } else {
+        times = 0;
+    }
+    document.getElementById('message').innerHTML =      
+        'Recorded <b>' + times + '</b> clicks';
+}</script>>
+</html>

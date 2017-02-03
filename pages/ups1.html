@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Operational Dashboard</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+	<link rel="icon" href="../dist/img/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  
+    <![endif]-->
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+    
+    
+	<script src="http://www.d3plus.org/js/d3.js"></script>
+    <script src="http://www.d3plus.org/js/d3plus.js"></script>
+        
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    
+   <!-- <script src="http://d3js.org/d3.v3.min.js"></script>-->
+    <script src="https://rawgit.com/gka/d3-jetpack/master/d3-jetpack.js"></script>
+
+    
+	<style>
+		#wrapper {
+			width: 100%;
+			background: white;
+		}
+        .rect[Attributes Style] {
+    width: 25.75px;
+    height: 406.391px;
+    opacity: 0;
+    x: 0px;
+    y: 0px;
+}
+        .d3plus_label{
+            font-size: 20px !important;
+        }
+        #highcharts-6{
+            margin-left: 73px;
+            margin-top: 33px;
+        }
+        .leftpanel{
+                width: 45%;
+    float: left;
+    position: relative;
+        }
+        .rightpanel{
+            width: 55%;
+            float: right;
+            position: relative;
+        }
+			.mydropdown {
+    font-size: 14px!important;
+    font-weight: 400;
+    margin-left: 10px;
+    margin-top: 4px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    width: 9%;
+    padding-left: 35px;
+    color: #fff;
+    background-color: #5BC0DE;
+}
+
+.navbar-nav {
+            float: right !important;
+            margin: 0;
+        }
+        .navbar {
+            position: relative;
+            min-height: 50px;
+            margin-bottom: 20px !important;
+            border: 1px solid transparent;
+        }
+        .navbar-default .navbar-collapse, .navbar-default .navbar-form {
+            border-color: #337ab7 !important;
+            background-color: #337ab7 !important;
+        }
+        .navbar-default .navbar-nav>li>a {
+            color: white;
+        }
+        .page-header, .navbar-brand {
+            color: white !important;
+                font-size: 24px;
+        }
+        .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    color: #555;
+    background-color: white;
+}
+        .logoHolder {
+    width: 102px;
+    height: 34px;
+    background: url('../dist/img/Logo.png') no-repeat;
+    display: inline-block;
+    position: relative;
+    bottom: 10px;
+}
+        .loginHeaderText {
+    position: relative;
+    bottom: 16px;
+    font-size: 20px;
+    left: 10px;
+}
+     /*.highcharts-container{
+            margin-left: 73px;
+            margin-top: 33px;
+        }  */ 
+	
+	</style>
+   	<style>
+        #gauge{
+		position:relative;
+		height:40%;
+		width:40%;
+        left:0%;
+		top:20%;
+		
+		}
+		
+        
+
+/*      #viz{
+		position:relative;
+		height:450px;
+		width:920px;
+				 
+        }*/
+        .tabledata{
+            
+            float: right;
+	        text-align: right;
+	        clear: none;
+        }
+		</style>
+    <style type="text/css">
+        
+        body { font-family: "Lucida Sans Unicode","Lucida Grande",Sans-Serif; font-weight: 200; background-color: white; }
+        th { text-align: center; border:2px solid; padding: 50px; color: cornflowerblue; }
+        th, td { font-family: "Lucida Sans Unicode","Lucida Grande",Sans-Serif; padding: 0 1em 0.5ex 0;border:1px solid blue;  cellspacing:20px; font-size: 20px;}
+        th.center, td.center { text-align: center;padding: 30px; font-size: 20px; }
+        th.num, td.num { text-align: center; padding: 30px;}
+        
+    </style>
+
+    
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom:0;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+          <a class="navbar-brand" href="#">
+                  <span class="logoHolder"></span>
+                  <span class="loginHeaderText">Operational Dashboard</span>
+              </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <!--<ul class="nav navbar-nav">-->
+            
+                <form class="navbar-form navbar-right searchbox ng-pristine ng-valid" style="margin-right:20px;">
+                <input class="form-control" id="search" style="width: 175px;" type="text" placeholder="Search">
+                <button class="btn btn-info" id="Sbutton" onclick="searchNode()" type="button">Search</button>
+                </form>
+			
+			          
+         <!-- </ul>-->
+        </div><!--/.nav-collapse -->
+    </nav>      
+
+            
+            
+     <div class="col-lg-3 col-md-6 leftpanel">
+         <div class="panel panel-default" style="width:50%;float:left;height:100%;">
+                        <div class="panel-heading" style="background-color: aliceblue;" >
+                          <b style="font-size:15px">Total Cost </b>  
+                          
+                        </div>
+                        <div id="container1" style="width:100%; height:75%; margin: 0 auto"></div>
+                    </div> 
+                   
+         <div class="panel panel-default" style="width:50%;float:left;height:445px;">
+                        <div class="panel-heading" style="background-color: aliceblue;" ><b style="font-size:15px">
+                            Battery Gauge</b>
+                            
+                        </div>
+                      <div id="container-speed" style="width: 300px; height: 200px; top:500px; align:center;"></div>
+    
+                    </div> 
+         
+         <div class="panel panel-default" style="width:100%;float:left;height:510px;">
+                        <div class="panel-heading" style="background-color: aliceblue;"><b style="font-size:15px">
+                            Recommended Reduction in Usage</b>
+                            
+                        </div>
+             
+              <div class="col-sm-9 paginationbtn" style="margin-left: 25%;padding-bottom:25px;padding-top:20px;">
+           		<button class="btn btn-info" style="float:right;margin-right:3%;margin-top:-1%;" type="button" id="pg1620">top 10</button>
+                <button class="btn btn-info" style="float:right;margin-right:1%;margin-top:-1%;" type="button" id="pg1115">top 7</button>
+                <button class="btn btn-info" style="float:right;margin-right:1%;margin-top:-1%;" type="button" id="pg610">top 5</button>
+                <button class="btn btn-info" style="float:right;margin-right:1%;margin-top:-1%;" type="button" id="pg15">top 3</button>
+               
+           
+            </div>
+             <div id="tabledata" style="align:left;"></div>
+                       
+                    </div> 
+                </div>
+        <div class="col-lg-3 col-md-6 rightpanel">
+            
+            <div class="panel panel-default" style="width:100%;float:left;height:445px;">
+                        <div class="panel-heading" style="background-color: aliceblue;" >
+                          <b style="font-size:15px">Power Consumption Series for  </b>  
+                          
+                        </div>
+                
+                        <div id = "viz" class="panel-body" style="width:96%;height:86%;">
+                           
+                        </div>
+             
+                       
+                    </div> 
+        
+            <div class="panel panel-default" style="width:100%;float:right;height:400px;">
+                        <div class="panel-heading" >
+                          <b style="font-size:15px">Power Consumption Series for  </b>  
+                          
+                        </div>
+                
+                        <div id="container2" style="min-width: 400px; height: 300px; align:right;"></div>
+                       
+                    </div> 
+             
+             
+         
+        
+        
+        <script>
+    
+                        // the table rows, typically loaded from data file using d3.csv
+                           var devices = [
+                               
+                            {"usd": 345, "product": "AC","hours":"2","psaved":"4"},
+                            {"usd": 128, "product": "Refrigerators","hours":"3","psaved":"3"},
+                            {"usd": 897, "product": "Lights","hours":"2","psaved":"5"},
+                            {"usd": 987, "product": "Desktops","hours":"4","psaved":"10"},
+                            {"usd": 689, "product": "Vending Machines","hours":"2","psaved":"5"}
+
+                           
+                        ];  
+
+
+
+
+
+
+                        // column definitions
+                           var columns = [
+                          { head: 'Device', cl: 'left', html: ƒ('product') },
+                        
+                          { head: 'Hours Reduced (hours)', cl: 'center', html: ƒ('hours') },
+
+                          { head: 'Power Saved   (Watt)', cl: 'num', html: ƒ('psaved', d3.format('.1f')) },
+                               
+                          { head: 'Cost Saved    ($)', cl: 'center', html: ƒ('usd') },
+
+                        ]; 
+
+
+
+
+                        // create table
+                        var table = d3.select('#tabledata')
+                            .append('table');
+
+                        // create table header
+                        table.append('thead').append('tr')
+                            .selectAll('th')
+                            .data(columns).enter()
+                            .append('th')
+                            .attr('class', ƒ('cl'))
+                            .text(ƒ('head'));
+                        // create table body
+                        table.append('tbody')
+                            .selectAll('tr')
+                            .data(devices).enter()
+                            .append('tr')
+                            .selectAll('td')
+                            .data(function(row, i) {
+                                return columns.map(function(c) {
+                                    // compute cell values for this specific row
+                                    var cell = {};
+                                    d3.keys(c).forEach(function(k) {
+                                        cell[k] = typeof c[k] == 'function' ? c[k](row,i) : c[k];
+                                    });
+                                    return cell;
+                                });
+                            }).enter()
+                            .append('td')
+                            .html(ƒ('html'))
+                            .attr('class', ƒ('cl'));
+                            function length() {
+                            var fmt = d3.format('02d');
+                            return function(l) { return Math.floor(l / 60) + ':' + fmt(l % 60) + ''; };
+                        }
+            </script>
+        
+        
+    </div></div>
+			        
+                        <!-- /.panel-heading -->
+                        <!-- /.panel-body -->
+        
+    <div id= "gauge" style="float:left;">
+		<script type="text/javascript">
+            //Line graph code
+            
+            $(function () {
+    $('#container2').highcharts({
+        title: {
+            text: 'Hourly power consumption of the device',
+            x: -20 //center
+        },
+        
+		credits: {
+                        enabled: false
+                    },
+        xAxis: {
+		    title: {
+                text: 'Time'
+            },
+            categories: ['12:00', '1:00', '2:00', '3:00', '4:00', '5:00',
+                '6:00', '7:00', '8:00', '9:00', '10:00', '11:00']
+        },
+        yAxis: {
+            title: {
+                text: 'Power Consumed  (Watts)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: 'Watts'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            showInLegend: false,
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        }, 
+            
+        ]
+    });
+});
+            
+            
+            
+            //bar chart code
+            
+            $(function () {
+    $('#container1').highcharts({
+        chart: {
+            type: 'column'
+			
+        },
+		 credits: {
+                        enabled: false
+                    },
+
+		
+        title: {
+            text: 'Monthly Expenses Incurred'
+        },
+        
+        xAxis: {
+            categories: [
+                'Jan',
+                'Feb',
+                'Mar',
+                'April'
+                
+            ],
+			
+            crosshair: true
+        },
+		 
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Cost in $'
+            },
+            
+                    
+        },
+        tooltip: {
+           // headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+           // pointFormat: '<tr><td style="color:{series.color};padding:0" </td>' +
+                //'<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            //footerFormat: '</table>',
+            shared: false,
+            useHTML: false
+        },
+       
+        series: [{
+            showInLegend:false,
+            data: [49.9, 106.4, 71.5, 33.5],
+            pointWidth: 50,
+			pointPadding:0,
+			color: '#83aaf0'
+        }, 
+		
+
+        ]
+    });
+});
+            
+            
+            
+            //gauge code
+            $(function () {
+
+                var gaugeOptions = {
+
+                    chart: {
+                        type: 'solidgauge',
+                        
+                         
+                   },
+
+                    title: null,
+
+                    pane: {
+                        center: ['50%', '85%'],
+                        size: '140%',
+                        startAngle: -90,
+                        endAngle: 90,
+                        background: {
+                            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+                            innerRadius: '60%',
+                            outerRadius: '100%',
+                            shape: 'arc'
+                        }
+                    },
+
+                    tooltip: {
+                        enabled: false
+                    },
+
+                    // the value axis
+                    yAxis: {
+                        stops: [
+                            [0.1, '#55BF3B'], // green
+                            [0.5, '#DDDF0D'], // yellow
+                            [0.9, '#DF5353'] // red
+                        ],
+                        lineWidth: 0,
+                        minorTickInterval: null,
+                        tickPixelInterval: 400,
+                        tickWidth: 0,
+                        title: {
+                            y: -70
+                        },
+                        labels: {
+                            y: 16
+                        }
+                    },
+
+                    plotOptions: {
+                        solidgauge: {
+                            dataLabels: {
+                                y: 5,
+                                borderWidth: 0,
+                                useHTML: true
+                            }
+                        }
+                    }
+                };
+
+                // The power gauge
+                $('#container-speed').highcharts(Highcharts.merge(gaugeOptions, {
+                    yAxis: {
+                        min: 0,
+                        max: 200,
+                        title: {
+                            text: 'Power Consumption'
+                        }
+                    },
+
+                    credits: {
+                        enabled: false
+                    },
+
+                    series: [{
+                        name: 'Power Consumption',
+                        data: [75],
+                        dataLabels: {
+                            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                                   '<span style="font-size:12px;color:silver">kW/hr</span></div>'
+                        },
+                        tooltip: {
+                            valueSuffix: ' kW/hr'
+                        }
+                    }]
+
+                }));
+
+
+
+            });
+		</script>
+    </div>
+        <script>
+              // sample data array
+              var trade_data = [
+                {"usd": 34590873460, "product": "AC"},
+                {"usd": 12897429187, "product": "Refrigerators"},
+                {"usd": 8974520985, "product": "Lights"},
+                {"usd": 5572340000, "product": "Desktops"},
+                {"usd": 6897234099, "product": "Vending Machines"},
+
+              ]
+              // instantiate d3plus
+              var visualization = d3plus.viz()
+                .container("#viz")
+                .data(trade_data)
+                .type("tree_map")
+                .id("product")
+                .size("usd")
+                 .font({ "family": "Times", "size":"10px" })
+                .labels({"align": "left", "valign": "top"})
+                //.color({
+                  //"range": [ "#6373FF", "#63A3FF", "#63E3FF", "#63FFFB", "#63FFCB",
+                    //   "#63FF9B", "#63FF6B", "#7BFF63", "#BBFF63", "#DBFF63", "#FBFF63", 
+                      // "#FFD363", "#FFB363", "#FF8363", "#FF7363", "#FF6364"],
+
+                  //"value": "usd"
+                //})
+              .shape({
+      "rendering":"optimizeSpeed" // fine-tune SVG shape rendering
+    })
+                .draw()
+              
+        </script>
+	
+
+
+        <div style="width: 1000px; height: 400px; margin: 0; top:5%">
+    
+    
+        </div>
+    
+   
+        
+
+        </div>
+        
+    
+    
+    
+    <!-- Footer-->
+    
+    
+        
+    
+             <P style = "float: right;"><b>Powered By EMC</b></p>
+             <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+
+    <!--<script src="../bower_components/jquery/dist/jquery.min.js"></script>-->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+
+ <!-- <script src="Highstock-2.1.9/js/themes/sand-signika.js"></script> -->
+ 
+ 
+</body>
+
+</html>

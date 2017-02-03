@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Highcharts Example</title>
+
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script src="http://www.d3plus.org/js/d3.js"></script>
+        <script src="http://www.d3plus.org/js/d3plus.js"></script>
+		<style type="text/css">
+		
+       <!--${demo.css}-->
+		</style>
+		<style>
+
+      #viz{
+		position:absolute;
+		height:50%;
+		width:50%;
+        left:45%;
+		top:0%;
+		
+		}
+		
+		</style>
+<div id = "power">
+<div id="viz"></div>
+		<script type="text/javascript">
+$(function () {
+
+    var gaugeOptions = {
+
+        chart: {
+            type: 'solidgauge'
+        }, 
+
+        title: null,
+
+        pane: {
+            center: ['50%', '85%'],
+            size: '140%',
+            startAngle: -90,
+            endAngle: 90,
+            background: {
+                backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+                innerRadius: '60%',
+                outerRadius: '100%',
+                shape: 'arc'
+            }
+        },
+
+        tooltip: {
+            enabled: false
+        },
+
+        // the value axis
+        yAxis: {
+            stops: [
+                [0.1, '#55BF3B'], // green
+                [0.5, '#DDDF0D'], // yellow
+                [0.9, '#DF5353'] // red
+            ],
+            lineWidth: 0,
+            minorTickInterval: null,
+            tickPixelInterval: 400,
+            tickWidth: 0,
+            title: {
+                y: -70
+            },
+            labels: {
+                y: 16
+            }
+        },
+
+        plotOptions: {
+            solidgauge: {
+                dataLabels: {
+                    y: 5,
+                    borderWidth: 0,
+                    useHTML: true
+                }
+            }
+        }
+    };
+
+    // The power gauge
+    $('#container-speed').highcharts(Highcharts.merge(gaugeOptions, {
+        yAxis: {
+            min: 0,
+            max: 200,
+            title: {
+                text: 'Power Consumption'
+            }
+        },
+
+        credits: {
+            enabled: false
+        },
+
+        series: [{
+            name: 'Power Consumption',
+            data: [80],
+            dataLabels: {
+                format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                    ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                       '<span style="font-size:12px;color:silver">kW/hr</span></div>'
+            },
+            tooltip: {
+                valueSuffix: ' kW/hr'
+            }
+        }]
+
+    }));
+
+   
+
+});
+		</script>
+		<script>
+  // sample data array
+  var trade_data = [
+    {"usd": 34590873460, "product": "AC"},
+    {"usd": 12897429187, "product": "Refrigerators"},
+    {"usd": 8974520985, "product": "Lights"},
+    {"usd": 5572340000, "product": "Desktops"},
+    {"usd": 6897234099, "product": "Vending Machines"},
+    
+  ]
+  // instantiate d3plus
+  var visualization = d3plus.viz()
+    .container("#viz")
+    .data(trade_data)
+    .type("tree_map")
+    .id("product")
+    .size("usd")
+    .labels({"align": "left", "valign": "top"})
+	//.color({
+      //"range": [ "#6373FF", "#63A3FF", "#63E3FF", "#63FFFB", "#63FFCB",
+        //   "#63FF9B", "#63FF6B", "#7BFF63", "#BBFF63", "#DBFF63", "#FBFF63", 
+          // "#FFD363", "#FFB363", "#FF8363", "#FF7363", "#FF6364"],
+	  
+      //"value": "usd"
+    //})
+    .draw()
+</script>
+	</head>
+	<body>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+
+<div style="width: 1000px; height: 400px; margin: 0; top:5%">
+    <div id="container-speed" style="width: 300px; height: 200px; top:500px;"></div>
+    
+</div>
+    <p style="width: 500px ; height: 300px ;float:right">
+	<pre>                                  <u><b>Suggested Savings</b> </u>:
+
+							By switching off ____________________ for _________ hours
+
+							you will save _______________ kW or Rs. ____________  
+																																
+	
+	</pre>
+	
+	</p>
+    </div>
+	</body>
+</html>

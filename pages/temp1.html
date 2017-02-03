@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>D3 World Map</title>
+      
+      
+      <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+	<link rel="icon" href="../dist/img/favicon.ico">
+        
+        <!--CSS file for implicit styles-->
+    <link href="../delCss/myStyles1.css" rel="stylesheet">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <!--<script src="https://code.highcharts.com/maps/highmaps.js"></script>-->
+        <!--<script src="http://code.highcharts.com/maps/modules/map.js"></script>-->
+        <!--Map js file ==<script src="http://code.highcharts.com/maps/modules/map.js"></script>-->
+             <script src="../js/map.src.js"></script>
+<script src="https://code.highcharts.com/maps/modules/data.js"></script>
+        <!--<script src="https://code.highcharts.com/maps/modules/drilldown.js"></script>-->
+        <script src="https://code.highcharts.com/mapdata/countries/us/us-all.js"></script>
+         <!--DrillDown js file-->
+             <script src="../js/myDrillDown.js"></script>
+
+<link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+      
+      <style type="text/css">
+${demo.css}
+		</style>
+		<style>
+		.mybtn{
+			width:200px;
+			height:40px;
+			margin-top:700px;
+			
+			padding:1%;
+		
+		
+		}
+		
+		</style>
+		<style type="text/css">
+    .mytable {
+      border-collapse: collapse;
+      width: 100%;
+      background-color: white;
+    }
+    .mytable-head {
+      
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .mytable-head td {
+      
+    }
+    .mytable-body {
+            margin-top: 0;
+      padding-top: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+        font-size:14px;
+        
+        
+    }
+            .mytable-body1 {
+            margin-top: 0;
+      padding-top: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+        font-size:14px;
+        
+        
+    }
+    .mytable-body td {
+      
+      
+        
+    }
+    .mytable-footer {
+      margin-top: 0;
+      padding-top: 0;
+    }
+    .mytable-footer td {
+      }
+  </style>
+  </head>
+  <body>
+      <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom:0;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+          <a class="navbar-brand" href="#">
+                  <span class="logoHolder"></span>
+              </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <!--<ul class="nav navbar-nav">-->
+            
+                 <form class="navbar-form navbar-right searchbox ng-pristine ng-valid" style="margin-right:0%;">
+                <input class="form-control" id="search" style="width: 60%;" type="text" placeholder="Search">
+                <button class="btn btn-info" id="Sbutton" onclick="searchNode()" type="button">Search</button>
+                </form>
+                  
+                    <ul class="nav navbar-nav" style="float:right">
+                        
+                     <li >
+                     <a href="BuildMain.html">My Home</a>
+                  </li>
+        
+              </ul>
+        <!--/.nav-collapse -->
+                
+            
+           
+			
+			          
+         <!-- </ul>-->
+        </div><!--/.nav-collapse -->
+    </nav> 
+      <div class="row col-lg-12">
+    <div class="col-lg-8">
+        <div class="panel panel-default" style="height:100%;">
+     <div id="container" style="min-height:820px;max-height: 900px; width:100%;min-width: 410px; max-width: 1200px; margin: 0 auto"></div>
+      </div>
+      </div>
+          <div class="col-lg-4">
+        <div class="panel panel-default" style="" >
+        <div class="col-lg-3 col-md-6" id="container1" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto">
+        
+        </div>
+        </div>
+    <table class="mytable mytable-head">
+    <tr>
+        <td width="100%" style="font-size:18px"><center>Top Priority States</center></td>
+      
+    </tr>
+  </table>
+        <table class="mytable mytable-body1">
+    <tr >
+      <td width="60%"  >State</td>
+        <td width="20%" >Total Power(TWs)</td>
+      <td width="20%" >Power Percent</td>
+    </tr>
+  </table>
+  <table class="mytable mytable-body">
+    <tr style="background: brown">
+      <td width="60%" id="demo1" >50</td>
+        <td width="20%" id="demo11">30</td>
+      <td width="20%" id="demo12">20</td>
+    </tr>
+  </table>
+  <table class="mytable mytable-body">
+    <tr style="background: #bf4040">
+      <td width="60%" id="demo2">16</td>
+      <td width="20%" id="demo21">68</td>
+      <td width="20%" id="demo22">16</td>
+    </tr>
+  </table>
+  <table class="mytable mytable-body">
+    <tr style="background: #d98c8c">
+      <td width="60% "id="demo3">20</td>
+      <td width="20%" id="demo31">30</td>
+      <td width="20%" id="demo32">50</td>
+    </tr>
+  </table>   
+        
+        <div class="panel panel-default" style="height:350px;margin-top:40px" >
+        <div class="col-lg-3 col-md-6"><div class="row">
+            <div class=col-lg-4>
+             </div>
+            <div class=col-lg-4>Recommendations
+             </div>
+            <div class=col-lg-4>
+             </div>
+
+            </div>
+        </div>
+            </div>
+
+            </div>
+      </div>
+    <script type="text/javascript">
+        $(function () {
+    $('#container1').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Historic World Population by Region'
+        },
+        subtitle: {
+            text: 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'
+        },
+        xAxis: {
+            categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Population (millions)',
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' millions'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 80,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: 'Year 1800',
+            data: [107, 31, 635, 203, 2]
+        }, {
+            name: 'Year 1900',
+            data: [133, 156, 947, 408, 6]
+        }, {
+            name: 'Year 2012',
+            data: [1052, 954, 4250, 740, 38]
+        }]
+    });
+});
+     $(function () {
+    
+
+    /*
+    TODO:
+    - Check data labels after drilling. Label rank? New positions?
+    - Not US Mainland text
+    - Separators
+    */
+var cities=[];
+    var max1=0,max2=0,max3=0,max1P=0,max2P=0,max3P=0
+    var maxS1,maxS2,maxS3;
+    var i=0;
+    var total=0;
+    var x=[10,9,8,7,6,5,4,3,2,1,10,9,8,7,6,5,14,3,2,18,11,9,8,7,6,5,4,3,12,1,15,9,8,7,6,5,4,3,2,1,10,9,8,7,6,5,4,3,2,1,11]
+    window.x=x;
+    var data = Highcharts.geojson(Highcharts.maps['countries/us/us-all']),
+        // Some responsiveness
+        small = $('#map').width() < 400;
+    
+    // sum of array
+    $.each(x,function() {
+    total += this;
+        window.total=total;
+});
+
+    // Set drilldown pointers
+    $.each(data, function () {
+        this.drilldown = this.properties['hc-key'];
+        this.value = x[i];
+        if(max1<=x[i])
+            {
+                max3=max2;
+                max2=max1;
+                max1=i;
+                maxS3=maxS2;
+                maxS2=maxS1;
+                maxS1=this.properties['hc-key'];
+                
+                
+            }
+        else if(max2<=x[i])
+            {
+                max3=max2;
+                max2=i;
+                maxS3=maxS2;
+                maxS2=this.properties['hc-key'];
+                
+            }
+        else if(max3<=x[i])
+            {
+                max3=i;
+                maxS3=this.properties['hc-key'];
+                
+            }
+        i++;
+        
+        // Non-random bogus data
+    });
+    console.log(total);
+                console.log((x[max1]/total)*100);
+                max1P=Math.ceil((x[max1]/total)*100);
+    console.log((x[max2]/total)*100);
+                max2P=Math.ceil((x[max2]/total)*100);
+    console.log((x[max3]/total)*100);
+                max3P=Math.ceil((x[max3]/total)*100);
+    
+
+    // Instanciate the map
+    $('#container').highcharts('Map', {
+        chart : {
+            events: {
+                drilldown: function (e) {
+                    setTimeout(function() {
+                                     // Back button id creation in the below code
+                    console.log("Adding Button");
+        var x2=document.getElementsByClassName('highcharts-button')[3];
+        var att = document.createAttribute("id");
+        att.value="Backbutton";
+                        x2.setAttributeNode(att);
+                    },100);
+                    
+                           // call myfun to get the top 3 states back             
+                        if (!e.seriesOptions) {
+       
+
+                        var chart = this,
+                            mapKey =  e.point.drilldown,
+                            // Handle error, the timeout is cleared on success
+                            fail = setTimeout(function () {
+                                if (!Highcharts.maps[mapKey]) {
+                                    chart.showLoading('<i class="icon-frown"></i> Failed loading ' + e.point.name);
+
+                                    fail = setTimeout(function () {
+                                        chart.hideLoading();
+                                    }, 1000);
+                                }
+                            }, 3000);
+
+                        // Show the spinner
+                        chart.showLoading('<i class="icon-spinner icon-spin icon-3x"></i>'); // Font Awesome spinner
+
+                        // Load the drilldown map
+                        $.getScript('../js/' + mapKey + '1.js', function () {
+                            document.getElementById("demo1").innerHTML="FullSerRestaurent",
+                            document.getElementById("demo2").innerHTML="SuperMarket",
+                            document.getElementById("demo3").innerHTML="WareHouse",
+                                       // total power print
+                     document.getElementById("demo11").innerHTML="42",    
+                     document.getElementById("demo21").innerHTML="15",
+                     document.getElementById("demo31").innerHTML="11",
+                     // percent power print
+                     document.getElementById("demo12").innerHTML="18",    
+                     document.getElementById("demo22").innerHTML="6",
+                     document.getElementById("demo32").innerHTML="5",
+
+                            data = Highcharts.geojson(Highcharts.maps[mapKey]),
+                                console.log(data),
+                            /*cities = Highcharts.geojson(Highcharts.mappoint[mapKey]),*/
+                                console.log(cities);
+                            // Set a non-random bogus value
+                            $.each(data, function (i) {
+                                this.value = i;
+                            });
+
+                            // Hide loading and add series
+                            chart.hideLoading();
+                            clearTimeout(fail);
+                            chart.addSeriesAsDrilldown(e.point, {
+                                name: e.point.name,
+                                data: data,
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.name}'
+                                }
+                            });
+                        });
+                    }
+
+
+                    this.setTitle(null, { text: e.point.name });
+                },
+                drillup: function () {
+                    this.setTitle(null, { text: 'USA' });
+                    /*$('#Backbutton').on('click',function(){
+                                       console.log('calling'); 
+                        });*/
+                    var z1=document.getElementById('Backbutton');
+                    z1.addEventListener("click",myFun2);
+                    console.log('called');
+                    function myFun2(){
+    console.log('inside 2');
+                     document.getElementById("demo1").innerHTML=data[max1].name;    
+                     document.getElementById("demo2").innerHTML=data[max2].name;
+                     document.getElementById("demo3").innerHTML=data[max3].name;
+    
+                     
+           }
+                 /*  
+                     z1.exonclick = z1.onclick;
+        z1.onclick = function (oEvent) {
+            if (this.exonclick) {
+                this.exonclick(oEvent);
+            }
+            //
+            alert("hello2");
+        }*/
+    
+                    $("tspan:contains(School)").hover(function(){location.href = "diff_buildings3.html";});
+                    
+                    
+                    
+                     
+                }
+            }
+        },
+
+        title : {
+            text : 'United States Power Consumption'
+        },
+
+        subtitle: {
+            text: 'USA',
+            floating: true,
+            align: 'right',
+            y: 50,
+            style: {
+                fontSize: '16px'
+            }
+        },
+
+        legend: small ? {} : {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+        colorAxis: {
+            min: 0,
+            minColor: '#ffebe5',
+            maxColor: '#991f00'
+        },
+
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+
+        plotOptions: {
+            map: {
+                states: {
+                    hover: {
+                        color: '#EEDD66'
+                    }
+                }
+            }
+        },
+
+        series : [{
+            data : data,
+            name: 'USA',
+            dataLabels: {
+                enabled: true,
+                format: '{point.properties.postal-code}'
+            }
+        }, 
+                  {
+                name: 'Cities',
+                type: 'mappoint',
+                data: cities,
+                color: 'black',
+                marker: {
+                    radius: 2
+                },
+                dataLabels: {
+                    align: 'left',
+                    verticalAlign: 'middle'
+                },
+                animation: false,
+                tooltip: {
+                    pointFormat: '{point.name}'
+                }
+            }],
+
+        drilldown: {
+            //series: drilldownSeries,
+            activeDataLabelStyle: {
+                color: '#FFFFFF',
+                textDecoration: 'none',
+                textShadow: '0 0 3px #000000'
+            },
+            drillUpButton: {
+                relativeTo: 'spacingBox',
+                position: {
+                    x: 0,
+                    y: 60
+                }
+            }
+        }
+    });
+    window.data=data;
+            window.max1=max1;
+                    window.max2=max2;
+            window.max3=max3; 
+    window.maxS1=maxS1;
+    window.maxS2=maxS2;
+    window.maxS3=maxS3;
+    window.max1P=max1P;
+    window.max2P=max2P;
+    window.max3P=max3P;
+});
+     $( document ).ready(function() {
+       
+       
+      
+       
+        /*document.getElementsByClassName('highcharts-name-hospital highcharts-key-us-tx-435').click(function(){$('.highcharts-key-us-tx-435').append('<a href="diff_buildings.html"></a>')}) */// to give href //for buildingds
+       
+       $('.highcharts-key-us-tx-435').on('click',function(){location.href = "diff_buildings3.html"; });
+       var i=0;
+       $.each(data, function () {
+        this.drilldown = this.properties['hc-key'];
+        this.value = x[i];
+    
+                    var x1=document.getElementsByClassName('highcharts-drilldown-point')[i];
+        var att = document.createAttribute("id");
+        att.value=this.properties['hc-key'];
+        
+        x1.setAttributeNode(att);
+           i++;
+                     
+    
+var item1 = document.getElementById(maxS1);
+var item2 = document.getElementById(maxS2);           
+var item3 = document.getElementById(maxS3);   
+           window.item1=item1;
+           window.item2=item2;
+           window.item3=item3;
+           
+
+           
+$('table.mytable tbody').on('click',function(){$(item1).css("style", "background-color:blue;")}); 
+           $('table.mytable tbody').on('click',function(){$(item2).css("style", "background-color:blue;")}); 
+           $('table.mytable tbody').on('click',function(){$(item3).css("style", "background-color:blue;")});
+           
+           
+        
+})
+       myFun1();
+                    // total power print
+                     document.getElementById("demo11").innerHTML=x[max1];    
+                     document.getElementById("demo21").innerHTML=x[max2];
+                     document.getElementById("demo31").innerHTML=x[max3];
+                     // percent power print
+                     document.getElementById("demo12").innerHTML=max1P;    
+                     document.getElementById("demo22").innerHTML=max2P;
+                     document.getElementById("demo32").innerHTML=max3P;
+       
+       
+        //code to get the css fill for the path variable
+       var element = document.getElementById(maxS1),
+    style = window.getComputedStyle(element),
+    top = style.getPropertyValue('fill');
+       
+       //table to map highlighting
+       document.getElementById("demo1").onmouseover = function() {
+        document.getElementById(maxS1).style.fill="#99cc00";} 
+       
+        document.getElementById("demo1").onmouseout = function() {
+        document.getElementById(maxS1).style.fill=top;} 
+       
+        
+        //2nd in table
+        document.getElementById("demo2").onmouseover = function() {
+        document.getElementById(maxS2).style.fill="#99cc00";} 
+       
+        document.getElementById("demo2").onmouseout = function() {
+        document.getElementById(maxS2).style.fill=top;} 
+       
+        document.getElementById("demo3").onmouseover = function() {
+        document.getElementById(maxS3).style.fill="#99cc00";} 
+       
+        document.getElementById("demo3").onmouseout = function() {
+        document.getElementById(maxS3).style.fill=top;} 
+       
+          });            
+    </script>
+      <script src="../js/myScript1.js"></script>
+  </body>
+</html>

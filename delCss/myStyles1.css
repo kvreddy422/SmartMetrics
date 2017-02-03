@@ -1,0 +1,147 @@
+#wrapper {
+			width: 100%;
+			background: white;
+		}
+        .rect[Attributes Style] {
+    width: 25.75px;
+    height: 406.391px;
+    opacity: 0;
+    x: 0px;
+    y: 0px;
+}
+        .d3plus_label{
+            font-size: 20px !important;
+        }
+        #highcharts-6{
+           /* margin-left: 15%;*/
+            margin-top: 27%;
+        }
+        .leftpanel{
+                width: 45%;
+    float: left;
+    position: relative;
+        }
+        .rightpanel{
+            width: 55%;
+            float: right;
+            position: relative;
+        }
+			.mydropdown {
+    font-size: 14px!important;
+    font-weight: 400;
+    margin-left: 10px;
+    margin-top: 4px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    width: 9%;
+    padding-left: 35px;
+    color: #fff;
+    background-color: #5BC0DE;
+}
+
+.navbar-nav {
+            
+            margin: 0;
+        }
+        .navbar {
+            position: relative;
+            min-height: 50px;
+            margin-bottom: 20px !important;
+            border: 1px solid transparent;
+        }
+        .navbar-default .navbar-collapse, .navbar-default .navbar-form {
+            border-color: #337ab7 !important;
+            background-color: #337ab7 !important;
+        }
+        .navbar-default .navbar-nav>li>a {
+            color: white;
+        }
+        .page-header, .navbar-brand {
+            color: white !important;
+                font-size: 24px;
+        }
+        .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    color: #555;
+    background-color: white;
+}
+        .logoHolder {
+    width: 102px;
+    height: 34px;
+    background: url('../dist/img/Logo.png') no-repeat;
+    display: inline-block;
+    position: relative;
+    bottom: 10px;
+}
+        .loginHeaderText {
+    position: relative;
+    bottom: 16px;
+    font-size: 20px;
+    left: 10px;
+}
+     /*.highcharts-container{
+            margin-left: 73px;
+            margin-top: 33px;
+        }  */ 
+	
+	</style>
+   	<style>
+        #gauge{
+		position:relative;
+		height:40%;
+		width:40%;
+        left:0%;
+		top:20%;
+		
+		}
+		
+        
+
+     /*  #viz{
+		position:relative;
+		height:550px;
+		width:920px;
+				 
+        } */
+        .tabledata{
+            
+            float: right;
+	        text-align: right;
+	        clear: none;
+            overflow-y: scroll;
+			table-layout:fixed;
+        }
+        table{
+            background-color: aliceblue;
+            position: relative;
+            margin-top:10%;
+            
+            width: 55%;
+            height: 50%;
+            
+        }
+        .customtable{
+            
+            table-layout: fixed;
+            overflow: auto; 
+            display: block;
+        }
+body { font-family: "Lucida Sans Unicode","Lucida Grande",Sans-Serif; font-weight: 200; background-color: white; }
+        th { text-align: center; border:2px solid; padding: 3%; color: cornflowerblue;background-color: white;  }
+        th, td { font-family: "Lucida Sans Unicode","Lucida Grande",Sans-Serif;border:1px solid #ddd;  cellspacing:20px; font-size: 124%; }
+        th.center, td.center { text-align: center;padding: 1%; font-size: 124%; }
+        th.num, td.num { text-align: center; padding: 1%;}
+.buildings{
+    width: 8%;
+        opacity: 0;
+    overflow-y: auto;
+    height: 702px;
+}
+/*#container{
+    min-width: 1220px; max-width: 2000px;
+    min-height: 875px;max-height: 1200px;
+}*/
+/*#container1{
+    min-width: 600px; max-width: 800px;
+    min-height: 200px;max-height: 225x;
+}*/

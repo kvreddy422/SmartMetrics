@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Operational Dashboard</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+	<link rel="icon" href="../dist/img/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  
+    <![endif]-->
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+    
+    
+	<script src="http://www.d3plus.org/js/d3.js"></script>
+    <script src="http://www.d3plus.org/js/d3plus.js"></script>
+        
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    
+   <!-- <script src="http://d3js.org/d3.v3.min.js"></script>-->
+    <script src="https://rawgit.com/gka/d3-jetpack/master/d3-jetpack.js"></script>
+
+    
+	<style>
+		#wrapper {
+			width: 100%;
+			background: white;
+		}
+			.mydropdown {
+    font-size: 14px!important;
+    font-weight: 400;
+    margin-left: 10px;
+    margin-top: 4px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    width: 9%;
+    padding-left: 35px;
+    color: #fff;
+    background-color: #5BC0DE;
+}
+
+.navbar-nav {
+            float: right !important;
+            margin: 0;
+        }
+        .navbar {
+            position: relative;
+            min-height: 50px;
+            margin-bottom: 0px !important;
+            border: 1px solid transparent;
+        }
+        .navbar-default .navbar-collapse, .navbar-default .navbar-form {
+            border-color: #337ab7 !important;
+            background-color: #337ab7 !important;
+        }
+        .navbar-default .navbar-nav>li>a {
+            color: white;
+        }
+        .page-header, .navbar-brand {
+            color: white !important;
+                font-size: 24px;
+        }
+        .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    color: #555;
+    background-color: white;
+}
+        .logoHolder {
+    width: 102px;
+    height: 34px;
+    background: url('../dist/img/Logo.png') no-repeat;
+    display: inline-block;
+    position: relative;
+    bottom: 10px;
+}
+        .loginHeaderText {
+    position: relative;
+    bottom: 16px;
+    font-size: 20px;
+    left: 10px;
+}
+	
+	</style>
+   	<style>
+        #gauge{
+		position:absolute;
+		height:40%;
+		width:40%;
+        left:0%;
+		top:20%;
+		
+		}
+		
+        
+
+      #viz{
+		position:absolute;
+		height:40%;
+		width:40%;
+        left:50%;
+		top:15 %;
+		
+		}
+		
+		</style>
+    <style type="text/css">
+        
+        body { font-family: "Lucida Sans Unicode","Lucida Grande",Sans-Serif; font-weight: 200; background-color: white}
+        th { text-align: center; border:2px solid; padding: 50px; color: cornflowerblue; }
+        th, td { font-family: "Lucida Sans Unicode","Lucida Grande",Sans-Serif; padding: 0 1em 0.5ex 0;border:1px solid blue;  cellspacing:20px; font-size: 20px;}
+        th.center, td.center { text-align: center;padding: 30px; font-size: 20px; }
+        th.num, td.num { text-align: center; padding: 30px;}
+        
+    </style>
+
+    
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+          <a class="navbar-brand" href="#">
+                  <span class="logoHolder"></span>
+                  <span class="loginHeaderText">Operational Dashboard</span>
+              </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            
+            <form class="navbar-form navbar-right searchbox ng-pristine ng-valid">
+        <input class="form-control" id="search" style="width: 175px;" type="text" placeholder="Search">
+        <button class="btn btn-info" id="Sbutton" onclick="searchNode()" type="button">Search</button>
+        </form>
+			
+			          
+          </ul>
+        </div><!--/.nav-collapse -->
+    </nav>      
+
+            <div class="row">
+			
+                <!-- <div class="col-lg-12">
+				<label class="drop_label" style="margin-top: 1%;float:left;font-size:larger">Select Stocks:</label>
+                    <select id = "mydropdown" class="mydropdown" style="margin: 15px;float:left" onchange="Render(this.value, this.selectedIndex )">
+ 
+					</select>
+                </div> -->
+                <!-- /.col-lg-12 -->
+            </div>
+            
+     
+<div id = "power">
+    
+    <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red panel-body">
+                        <div class="panel-heading" id="floor4" onclick="location.href='ups.html'" style="cursor: pointer;">
+                            <div class="row">
+                                <div class="col-xs-9 text-right">
+                                    <div id = "d1" style = "font-size:35px"><b>Building 4</b></div>
+                                    <div id = "d2" style = "font-size:35px"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-right"></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+<div id="viz"></div>
+    <div id= "gauge" style="float:left;">
+		<script type="text/javascript">
+            $(function () {
+
+                var gaugeOptions = {
+
+                    chart: {
+                        type: 'solidgauge'
+                    },
+
+                    title: null,
+
+                    pane: {
+                        center: ['50%', '85%'],
+                        size: '140%',
+                        startAngle: -90,
+                        endAngle: 90,
+                        background: {
+                            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+                            innerRadius: '60%',
+                            outerRadius: '100%',
+                            shape: 'arc'
+                        }
+                    },
+
+                    tooltip: {
+                        enabled: false
+                    },
+
+                    // the value axis
+                    yAxis: {
+                        stops: [
+                            [0.1, '#55BF3B'], // green
+                            [0.5, '#DDDF0D'], // yellow
+                            [0.9, '#DF5353'] // red
+                        ],
+                        lineWidth: 0,
+                        minorTickInterval: null,
+                        tickPixelInterval: 400,
+                        tickWidth: 0,
+                        title: {
+                            y: -70
+                        },
+                        labels: {
+                            y: 16
+                        }
+                    },
+
+                    plotOptions: {
+                        solidgauge: {
+                            dataLabels: {
+                                y: 5,
+                                borderWidth: 0,
+                                useHTML: true
+                            }
+                        }
+                    }
+                };
+
+                // The power gauge
+                $('#container-speed').highcharts(Highcharts.merge(gaugeOptions, {
+                    yAxis: {
+                        min: 0,
+                        max: 200,
+                        title: {
+                            text: 'Power Consumption'
+                        }
+                    },
+
+                    credits: {
+                        enabled: false
+                    },
+
+                    series: [{
+                        name: 'Power Consumption',
+                        data: [75],
+                        dataLabels: {
+                            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                                   '<span style="font-size:12px;color:silver">kW/hr</span></div>'
+                        },
+                        tooltip: {
+                            valueSuffix: ' kW/hr'
+                        }
+                    }]
+
+                }));
+
+
+
+            });
+		</script>
+    </div>
+<script>
+  // sample data array
+  var trade_data = [
+    {"usd": 34590873460, "product": "AC"},
+    {"usd": 12897429187, "product": "Refrigerators"},
+    {"usd": 8974520985, "product": "Lights"},
+    {"usd": 5572340000, "product": "Desktops"},
+    {"usd": 6897234099, "product": "Vending Machines"},
+    
+  ]
+  // instantiate d3plus
+  var visualization = d3plus.viz()
+    .container("#viz")
+    .data(trade_data)
+    .type("tree_map")
+    .id("product")
+    .size("usd")
+    .labels({"align": "left", "valign": "top"})
+	//.color({
+      //"range": [ "#6373FF", "#63A3FF", "#63E3FF", "#63FFFB", "#63FFCB",
+        //   "#63FF9B", "#63FF6B", "#7BFF63", "#BBFF63", "#DBFF63", "#FBFF63", 
+          // "#FFD363", "#FFB363", "#FF8363", "#FF7363", "#FF6364"],
+	  
+      //"value": "usd"
+    //})
+    .draw()
+</script>
+	
+
+
+<div style="width: 1000px; height: 400px; margin: 0; top:5%">
+    <div id="container-speed" style="width: 300px; height: 200px; top:500px;"></div>
+    
+</div>
+    
+   
+        </div>
+
+    </div>
+        
+        <div id="table-data">
+        
+        
+        
+         <script>
+    // the table rows, typically loaded from data file using d3.csv
+       var devices = [
+        {"usd": 34590873460, "product": "AC"},
+        {"usd": 12897429187, "product": "Refrigerators"},
+        {"usd": 8974520985, "product": "Lights"},
+        {"usd": 9872340000, "product": "Desktops"},
+        {"usd": 6897234098, "product": "Vending Machines"}
+    ];  
+        
+        
+        
+        
+        
+   
+    // column definitions
+       var columns = [
+      { head: 'Product', cl: 'center', html: ƒ('product') },
+    
+      { head: 'Power Consumption', cl: 'num', html: ƒ('usd', d3.format('.1f')) }
+    ]; 
+        
+        
+        
+    
+    // create table
+    var table = d3.select('body')
+        .append('table');
+        
+    // create table header
+    table.append('thead').append('tr')
+        .selectAll('th')
+        .data(columns).enter()
+        .append('th')
+        .attr('class', ƒ('cl'))
+        .text(ƒ('head'));
+    // create table body
+    table.append('tbody')
+        .selectAll('tr')
+        .data(devices).enter()
+        .append('tr')
+        .selectAll('td')
+        .data(function(row, i) {
+            return columns.map(function(c) {
+                // compute cell values for this specific row
+                var cell = {};
+                d3.keys(c).forEach(function(k) {
+                    cell[k] = typeof c[k] == 'function' ? c[k](row,i) : c[k];
+                });
+                return cell;
+            });
+        }).enter()
+        .append('td')
+        .html(ƒ('html'))
+        .attr('class', ƒ('cl'));
+        function length() {
+        var fmt = d3.format('02d');
+        return function(l) { return Math.floor(l / 60) + ':' + fmt(l % 60) + ''; };
+    }
+    </script>
+        
+        
+    </div>
+    
+        </div>
+
+				
+            </div>
+             <P style = "float: right;"><b>Powered By EMC</b></p>
+             <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+
+    <!--<script src="../bower_components/jquery/dist/jquery.min.js"></script>-->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+
+ <!-- <script src="Highstock-2.1.9/js/themes/sand-signika.js"></script> -->
+ 
+ 
+</body>
+
+</html>

@@ -1,0 +1,1627 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+		<title>Highmaps Example</title>
+		
+    <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+	<link rel="icon" href="../dist/img/favicon.ico">
+        
+        <!--CSS file for implicit styles-->
+    <link href="../delCss/myStyles1.css" rel="stylesheet">
+
+        <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+        <script type="text/javascript" src="../js/gogleapi.js"></script>
+        <!--<script src="https://code.highcharts.com/highcharts.js"></script>-->
+        <!--HighCharts js======<script src="https://code.highcharts.com/highcharts.js"></script>-->
+             <script src="../js/highcharts.js"></script>
+        <!--<script src="https://code.highcharts.com/modules/exporting.js"></script>-->
+        <script src="../js/exporting.js"></script>
+        <!--<script src="https://code.highcharts.com/maps/highmaps.js"></script>-->
+        <!--<script src="http://code.highcharts.com/maps/modules/map.js"></script>-->
+        <!--Map js file ==<script src="http://code.highcharts.com/maps/modules/map.js"></script>-->
+             <script src="../js/map.src.js"></script>
+<!--<script src="https://code.highcharts.com/maps/modules/data.js"></script>-->
+        <script src="../js/highchartsdata.js"></script>
+        <!--<script src="https://code.highcharts.com/maps/modules/drilldown.js"></script>-->
+        <!--<script src="https://code.highcharts.com/mapdata/countries/us/us-all.js"></script>-->
+        <script src="../js/usdata.js"></script>
+         <!--DrillDown js file-->
+             <script src="../js/myDrillDown.js"></script>
+		<style type="text/css">
+${demo.css}
+		</style>
+		<style>
+            
+            i.custom {font-size: 3em; color:#337ab7;}
+		.mybtn{
+			width:200px;
+			height:40px;
+			margin-top:700px;
+			
+			padding:1%;
+		
+		
+		}
+		
+		</style>
+		<style type="text/css">
+    .mytable {
+      border-collapse: collapse;
+      width: 100%;
+      background-color: white;
+    }
+    .mytable-head {
+      
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .mytable-head td {
+      
+    }
+    .mytable-body {
+            margin-top: 0;
+      padding-top: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+        font-size:16px;
+        
+        
+    }
+            
+            .mytable-body1 {
+            margin-top: 0;
+      padding-top: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+        font-size:16px;
+        
+        
+    }
+    .mytable-body td {
+      
+      
+        
+    }
+    .mytable-footer {
+      margin-top: 0;
+      padding-top: 0;
+    }
+    .mytable-footer td {
+      }
+            #container1{
+                
+                			
+			height:300px;
+                width:100%;
+            }
+  </style>
+		<script type="text/javascript">
+            var dataSet=[];
+            var totGas=0;
+            var totEle=0;
+            var totGas1=0;
+            var totEle1=0;
+            var total1=0;
+            var stateSet=[{"us-ma":"Massachusetts"},{"us-wa":"Washington"},{"us-ca":"California"},{"us-or":"Oregon"},{"us-wi":"Wisconsin"},{"us-mg":"Michigan"},{"us-nv":"Nevada"},{"us-nm":"NewMexico"},{"us-co":"Colorado"},{"us-wy":"Wyoming"},{"us-ks":"Kansas"},{"us-ne":"Nebraska"},{"us-ok":"Oklahoa"},{"us-mo":"Missouri"},{"us-il":"Illinois"},{"us-in":"Vermont"},{"us-ar":"Arkansas"},{"us-tx":"Texas"},{"us-ri":"RhodeIsland"},{"us-al":"Alabama"},{"us-ms":"Mississippi"},{"us-nc":"NorthCarolina"},{"us-va":"Virginia"},{"us-ia":"Iowa"},{"us-md":"Maryland"},{"us-de":"Delaware"},{"us-pa":"Pennsylvania"},{"us-nj":"NewJersey"},{"us-ny":"NewYork"},{"us-id":"Idaho"},{"us-sd":"SouthDakota"},{"us-ct":"Connecticut"},{"us-nh":"NewHampshire"},{"us-ky":"Kentucky"},{"us-oh":"Ohio"},{"us-tn":"Tennessee"},{"us-wv":"WestVirginia"},{"us-dc":"DistrictofColumbia"},{"us-la":"Louisiana"},{"us-fl":"Florida"},{"us-ga":"Georgia"},{"us-sc":"SouthCarolina"},{"us-mn":"Minnesota"},{"us-mt":"Montana"},{"us-nd":"NorthDakota"},{"us-az":"Arizona"},{"us-ut":"Utah"},{"us-hi":"Hawaii"},{"us-ak":"Alaska"}];
+
+            // Stack Bar instanciate
+            $(function () {
+    $('#container1').highcharts({
+        chart: {
+            
+            type: 'bar'
+        },
+        title: {
+            text: 'Total Power '
+        },
+        xAxis: {
+            categories: ['Gas','Electricity' ]
+ },
+        credits:{
+			enabled: false
+        },
+        yAxis:{
+            gridLineWidth: 0,
+   //     tickColor: 'black',
+        tickLength: 5,
+        tickWidth: 1,
+        tickPosition: 'outside',
+        
+        lineWidth:1,
+      //  lineColor:'black'
+            
+            
+        },
+        legend: {
+            reversed: true
+        },plotOptions: {
+            point: {
+    events: {
+        legendItemClick: function () {
+            return false; // <== returning false will cancel the default action
+        }
+    }
+},
+           	 series: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+					align: 'right',
+                    color: 'black',
+                    y: 1,
+					/*formatter: function () {
+					var pcnt = (this.y / 7) * 100;
+        return Highcharts.numberFormat(this.y,0)+" ("+Highcharts.numberFormat(pcnt,0) + "%)";
+    }*/}}},
+        series: [ {
+            name: 'Power in PWs',
+            data: [3.5,4]
+        }]
+    });
+});
+            
+    
+$(function () {
+    
+
+    /*
+    TODO:
+    - Check data labels after drilling. Label rank? New positions?
+    - Not US Mainland text
+    - Separators
+    */
+var cities=[];
+    var max1,max2,max3,max4,max5,max1P=0,max2P=0,max3P=0,max4P=0,max5P=0,max1SP=0,max2SP=0,max3SP=0,max4SP=0,max5SP=0;
+    var maxS1,maxS2,maxS3,maxS4,maxS5,maxC1,maxC2,maxC3,maxC4,maxC5;
+    var i=0;
+    var total=0;
+    var x=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,50,60,70,80,90,100,110,120,0]
+    window.x=x;
+    var data = Highcharts.geojson(Highcharts.maps['countries/us/us-all']),
+        // Some responsiveness
+        small = $('#map').width() < 400;
+    var url = 'http://liacm218:8181/BuildingCassandraRest/getaggregatedstates';
+var response = '';
+var request = new XMLHttpRequest();
+request.open('GET', url, false);  // `false` makes the request synchronous
+request.send(null);
+
+if (request.status === 200) {
+  response = request.responseText;
+}
+ responsejson = JSON.parse(response);
+console.log(responsejson);
+    
+	for(i=0;i<5;i++)
+        {
+         
+               total += responsejson[i].totalPower;
+               totGas += responsejson[i].gasFacility;
+               totEle += responsejson[i].electricityFacility;
+        
+        }
+    console.log(totGas+"totGas");
+    console.log(totEle+"totEle");
+    console.log(total+"total");
+    totGas=Math.ceil(totGas);
+    totEle=Math.ceil(totEle);
+      var chart12 = $('#container1').highcharts();// charts on the right made dynamic 
+                        var seriesLength = chart12.series.length;
+                        for(var i = seriesLength -1; i > -1; i--) {
+                            chart12.series[i].remove();
+                        }
+                        this.disabled = true;
+                            
+                            chart12.addSeries({
+                            type: 'bar',
+                            name: 'Power in PWs',
+                            data: [totGas,totEle],
+                            color :'#7cb5ec',                    
+                        });
+            
+    maxS1="us-"+(responsejson[0].state.toLowerCase());
+    maxS2="us-"+(responsejson[1].state.toLowerCase());
+    maxS3="us-"+(responsejson[2].state.toLowerCase());
+    maxS4="us-"+(responsejson[3].state.toLowerCase());
+    maxS5="us-"+(responsejson[4].state.toLowerCase());
+         
+    console.log(total);
+                console.log((x[max1]/total)*100);
+                max1P=Math.ceil((responsejson[0].totalPower/total)*100);
+    console.log((x[max2]/total)*100);
+                max2P=Math.ceil((responsejson[1].totalPower/total)*100);
+    console.log((x[max3]/total)*100);
+                max3P=Math.ceil((responsejson[2].totalPower/total)*100);
+                max4P=Math.ceil((responsejson[3].totalPower/total)*100);
+                max5P=Math.ceil((responsejson[4].totalPower/total)*100);
+    
+    
+    
+    window.max1P=max1P;
+    window.max2P=max2P;
+    window.max3P=max3P;
+    window.max4P=max4P;
+    window.max5P=max5P;
+    window.total=total;
+    window.maxS1=maxS1;
+    window.maxS2=maxS2;
+    window.maxS3=maxS3;
+    window.maxS4=maxS4;
+    window.maxS5=maxS5;
+
+                        document.getElementById("demo11").innerHTML=Math.ceil((responsejson[0].totalPower));    
+                     document.getElementById("demo21").innerHTML=Math.ceil((responsejson[1].totalPower));    
+                     document.getElementById("demo31").innerHTML=Math.ceil((responsejson[2].totalPower));    
+                     document.getElementById("demo41").innerHTML=Math.ceil((responsejson[3].totalPower));    
+                     document.getElementById("demo51").innerHTML=Math.ceil((responsejson[4].totalPower));    
+       
+                     // percent power print
+                     document.getElementById("demo12").innerHTML=max1P;    
+                     document.getElementById("demo22").innerHTML=max2P;
+                     document.getElementById("demo32").innerHTML=max3P;
+                     document.getElementById("demo42").innerHTML=max4P;
+                     document.getElementById("demo52").innerHTML=max5P;
+                    
+var resultss = 0;
+    x[50]=0;
+/*for(var i=0;i<100000;i++){*/
+	/*for (var key in responsejson){
+     
+	 console.log(key);
+        console.log(responsejson[i]["state"]);
+        
+        if(responsejson[i]["state"]=="AK"){
+            console.log(x[50]+"AK");
+            x[50]=x[50]+responsejson[i]["totalPower"];}
+        else if(responsejson[i]["state"]=="HI")
+            x[49]=x[49]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="UT")
+            x[48]=x[48]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="AZ")
+            x[47]=x[47]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="ND")
+            x[46]=x[46]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="MT")
+            x[45]=x[45]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="MN")
+            x[44]=x[44]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="SC")
+            x[43]=x[43]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="GA")
+            x[42]=x[42]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="FL")
+            x[41]=x[41]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="LA")
+            x[40]=x[40]+responsejson[i]["totalPower"];
+                else if(responsejson[i]["state"]=="DC")
+            x[39]=x[39]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="WV")
+            x[38]=x[38]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="TN")
+            x[37]=x[37]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="OH")
+            x[36]=x[36]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="KY")
+            x[35]=x[35]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="NH")
+            x[34]=x[34]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="CT")
+            x[33]=x[33]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="SD")
+            x[32]=x[32]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="ID")
+            x[31]=x[31]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="NY")
+            x[30]=x[30]+responsejson[i]["totalPower"];
+                else if(responsejson[i]["state"]=="NJ")
+            x[29]=x[29]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="PA")
+            x[28]=x[28]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="DE")
+            x[27]=x[27]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="MD")
+            x[26]=x[26]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="IA")
+            x[25]=x[25]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="VA")
+            x[24]=x[24]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="NC")
+            x[23]=x[23]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="MS")
+            x[22]=x[22]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="AL"){
+             console.log(x[21]+"AL");
+            x[21]=x[21]+responsejson[i]["totalPower"];}
+        else if(responsejson[i]["state"]=="RI")
+            x[20]=x[20]+responsejson[i]["totalPower"];
+                else if(responsejson[i]["state"]=="TX")
+            x[19]=x[19]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="AR")
+            x[18]=x[18]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="VT")
+            x[17]=x[17]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="IN")
+            x[16]=x[16]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="IL")
+            x[15]=x[15]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="MO")
+            x[14]=x[14]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="OK")
+            x[13]=x[13]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="NE")
+            x[12]=x[12]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="KS")
+            x[11]=x[11]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="WY")
+            x[10]=x[10]+responsejson[i]["totalPower"];
+                else if(responsejson[i]["state"]=="CO")
+            x[9]=x[9]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="NM")
+            x[8]=x[8]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="NV")
+            x[7]=x[7]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="MI")
+            x[6]=x[6]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="ME")
+            x[5]=x[5]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="WI")
+            x[4]=x[4]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="OR")
+            x[3]=x[3]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="CA")
+            x[2]=x[2]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="WA")
+            x[1]=x[1]+responsejson[i]["totalPower"];
+        else if(responsejson[i]["state"]=="MA")
+            x[0]=x[0]+responsejson[i]["totalPower"];
+       
+        
+        console.log(responsejson[i]["state"]);
+	 timestampLine[i] = new Date(responsejson[i]["timestamp"]);
+	 
+	  
+
+	 
+	 }
+    */
+    for (var i=0; i<=51;i++)
+           {
+               Math.ceil(x[i]);
+               
+           }
+    console.log("x[50=]"+x[50]);
+/*}*/
+    
+    $.each(data, function (i) {
+        
+    // sum of array
+    $.each(x,function() {
+    
+});
+
+    // Set drilldown pointers
+    
+ var timestampLine= [];
+	 var totalPowerLine = [];
+	 var pers= 0;
+	
+var resultss = 0;
+
+        this.drilldown = this.properties['hc-key'];
+        if(this.properties['hc-key']==maxS1){
+         this.value=responsejson[0].totalPower;
+            
+        }
+        else if(this.properties['hc-key']==maxS2){
+            this.value=responsejson[1].totalPower;
+            
+        }
+        else if(this.properties['hc-key']==maxS3){
+            this.value=responsejson[2].totalPower;
+            
+        }
+        else if(this.properties['hc-key']==maxS4){
+            this.value=responsejson[3].totalPower;
+            
+        }
+        else if(this.properties['hc-key']==maxS5){
+            this.value=responsejson[4].totalPower;
+            
+        }
+         else
+                                    this.value=0;
+        window.max1=max1;
+                    window.max2=max2;
+            window.max3=max3; 
+    window.max4=max4;
+            window.max5=max5;
+    
+         
+        console.log(this.properties['hc-key']);
+        console.log(this.properties['name']);
+        
+        /*this.value = x[i];*/
+       /* if(max1<=x[i])
+            {
+                max5=max4;
+                max4=max3;
+                max3=max2;
+                max2=max1;
+                max1=i;
+                maxS5=maxS4;
+                maxS4=maxS3;
+                maxS3=maxS2;
+                maxS2=maxS1;
+                maxS1=this.properties['hc-key'];
+                
+                
+            }
+        else if(max2<=x[i])
+            {
+                max5=max4;
+                max4=max3;
+                max3=max2;
+                max2=i;
+                maxS5=maxS4;
+                maxS4=maxS3;
+                maxS3=maxS2;
+                maxS2=this.properties['hc-key'];
+
+                
+            }
+        else if(max3<=x[i])
+            {
+                max5=max4;
+                max4=max3;
+                max3=i;
+                maxS5=maxS4;
+                maxS4=maxS3;
+                maxS3=this.properties['hc-key'];
+                
+            }
+        else if(max4<=x[i])
+            {
+                max5=max4;
+                max4=i;
+                maxS5=maxS4;
+                maxS4=this.properties['hc-key'];
+                
+            }
+        else if(max5<=x[i])
+            {
+                max5=i;
+                maxS5=this.properties['hc-key'];
+                
+            }
+            i++;
+       */ 
+        // Non-random bogus data
+    });
+    
+                window.onhashchange = function() {       
+    if (location.hash.length > 0) {        
+        mapKey = location.hash.replace('#','');
+        console.log(mapKey+"------------------------------------------------------");
+    } else {
+        mapKey= "";
+    }
+                            }
+
+    // Instanciate the map
+    $('#container').highcharts('Map', {
+        chart : {
+            events: {
+                drilldown: function (e) {
+                    
+                    localStorage.setItem( 'e',e );
+                    /*setTimeout(function() {
+                                     // Back button id creation in the below code
+                    console.log("Adding Button");
+        var x2=document.getElementsByClassName('highcharts-button')[3];
+        var att = document.createAttribute("id");
+        att.value="Backbutton";
+                        x2.setAttributeNode(att);
+                    },100);*/
+                    
+                           // call myfun to get the top 3 states back             
+                        if (!e.seriesOptions) {
+       
+
+                        var chart = this,
+                            mapKey =  e.point.drilldown,
+                            // Handle error, the timeout is cleared on success
+                            fail = setTimeout(function () {
+                                if (!Highcharts.maps[mapKey]) {
+                                    chart.showLoading('<i class="icon-frown"></i> Failed loading ' + e.point.name);
+
+                                    fail = setTimeout(function () {
+                                        chart.hideLoading();
+                                    }, 1000);
+                                }
+                            }, 3000);
+                             location.hash =mapKey;
+                            
+                        var mapKey1=mapKey.toUpperCase();
+                            mapKey1=mapKey1.split("-");
+                            console.log(mapKey1[1]+"mapKey1");
+                            
+                                var url = 'http://liacm218:8181/BuildingCassandraRest/gettotalpowerbystate/'+mapKey1[1];
+                                var response = '';
+                                var request = new XMLHttpRequest();
+                                request.open('GET', url, false);  // `false` makes the request synchronous
+                                request.send(null);
+
+                                if (request.status === 200) {
+                                  response = request.responseText;
+                                }
+                                 responsejson1 = JSON.parse(response);
+                                console.log(responsejson1);
+                            total1=total;
+                            totGas1=totGas;
+                            totEle1=totEle;
+                            total=0;
+                            totGas=0;
+                            totEle=0;
+                            for(i=0;i<5;i++)
+        {
+         
+               total += responsejson1[i].totalPower;
+               totGas += responsejson1[i].gasFacility;
+            console.log(totGas);
+               totEle += responsejson1[i].electricityFacility;
+        
+        }
+                                
+                        var count=0;    
+
+                        // Show the spinner
+                        chart.showLoading('<i class="icon-spinner icon-spin icon-3x"></i>'); // Font Awesome spinner
+
+                        // Load the drilldown map
+                        $.getScript('../js/' + mapKey + '1.js', function () {
+                            
+                            data = Highcharts.geojson(Highcharts.maps[mapKey]),
+                                console.log(data),
+                                document.getElementById("Priortycol1").innerHTML="<center>Cities</center>",
+                                document.getElementById("PriorityHeader").innerHTML="<center>Top Priority Cities</center>",
+                                document.getElementById("Priortycol1").innerHTML="<center>Cities</center>",
+                                document.getElementById("TGMwatt").innerHTML="<center>Total Power(TWs)</center>",
+                           
+                                
+                               
+                            
+         /*   if(count<=5)
+                {
+                            
+              for(i=0;i<50;i++)
+        {
+            if(("us-"+(responsejson1[i].state.toLowerCase())).localeCompare(mapKey)==0){
+                count++;
+            maxS1="us-"+(responsejson1[i].state.toLowerCase());
+            cityName= responsejson1[i].city;
+                $.each(data, function (i) {
+                    if(this.properties['name']==cityName){
+                            document.getElementById("demo11").innerHTML=Math.ceil((responsejson[0].totalPower)/(1024*1024));    
+                     document.getElementById("demo21").innerHTML=Math.ceil((responsejson[1].totalPower)/(1024*1024));    
+                     document.getElementById("demo31").innerHTML=Math.ceil((responsejson[2].totalPower)/(1024*1024));    
+                     document.getElementById("demo41").innerHTML=Math.ceil((responsejson[3].totalPower)/(1024*1024));    
+                     document.getElementById("demo51").innerHTML=Math.ceil((responsejson[4].totalPower)/(1024*1024));  
+                    }
+                });
+                
+            total += responsejson1[i].totalPower;
+            }
+                }
+        }*/
+                                
+                                
+                                
+                                
+                                
+                                
+                                /* document.getElementById("demo1").innerHTML="FullSerRestaurent",
+                            document.getElementById("demo2").innerHTML="SuperMarket",
+                            document.getElementById("demo3").innerHTML="WareHouse",
+                                
+                                       // total power print
+                     document.getElementById("demo11").innerHTML="42",    
+                     document.getElementById("demo21").innerHTML="15",
+                     document.getElementById("demo31").innerHTML="11",    
+                     document.getElementById("demo41").innerHTML="11",
+                     document.getElementById("demo51").innerHTML="11",
+                     // percent power print
+                     document.getElementById("demo12").innerHTML="18",    
+                     document.getElementById("demo22").innerHTML="6",
+                     document.getElementById("demo32").innerHTML="5",
+                     document.getElementById("demo42").innerHTML="5",
+                     document.getElementById("demo52").innerHTML="5", */                      
+
+                            /*data = Highcharts.geojson(Highcharts.maps[mapKey]),
+                                console.log(data),*/
+                            /*cities = Highcharts.geojson(Highcharts.mappoint[mapKey]),*/
+                                console.log(cities);
+                            
+                 /*   $("tspan:contains(United States)").innerHTML=e.point.name+" Power Consumption";*/          
+                            
+                            total=0;
+                            
+                            
+                    /*        for(i=0;i<1000;i++)
+        {
+            if(("us-"+(responsejson[i].state.toLowerCase())).localeCompare(mapKey)==0){
+            maxS1="us-"+(responsejson[i].state.toLowerCase());
+            cityName= responsejson[i].city;
+                $.each(data, function (i) {
+                    if(this.properties['name']==cityName){
+                        
+                    }
+                });
+                
+            total += responsejson[i].totalPower;
+            }
+        }*/
+    
+                             var chart12 = $('#container1').highcharts();// charts on the right made dynamic 
+                        var seriesLength = chart12.series.length;
+                        for(var i = seriesLength -1; i > -1; i--) {
+                            chart12.series[i].remove();
+                        }
+                        this.disabled = true;
+                            console.log(totGas+"totGastotGas");
+                            chart12.addSeries({
+                            type: 'bar',
+                            name: 'Power in TWs',
+                            data: [Math.ceil(totGas*5),Math.ceil(totEle*5)],
+                            color :'#7cb5ec',                    
+                        });
+                            total=total1;
+                            totGas=totGas1;
+                            totEle=totEle1;
+                           
+                                
+                            max1=0;
+                            max2=1;
+                            max3=2;
+                            max4=3;
+                            max5=4;
+                            
+                            // Set a non-random bogus value
+                            $.each(data, function (i) {
+                                sessionStorage.setItem('state', mapKey1[1]);
+                                 if(mapKey1[1]=="CA"){
+                                maxC1="us-ca-067";
+                                maxC2="us-ca-115";
+                                maxC3="us-ca-053";
+                                maxC4="us-ca-055";
+                                maxC5="us-ca-019";}
+                                if(mapKey1[1]=="MN"){
+                                maxC1="us-mn-135";
+                                maxC2="us-mn-117";
+                                maxC3="us-mn-001";
+                                maxC4="us-mn-033";
+                                maxC5="us-mn-169";}
+                                if(mapKey1[1]=="TX"){
+                                maxC1="us-tx-485";
+                                maxC2="us-tx-347";
+                                maxC3="us-tx-469";
+                                maxC4="us-tx-167";
+                                maxC5="us-tx-075";}
+                                if(mapKey1[1]=="IA"){
+                                maxC1="us-ia-061";
+                                maxC2="us-ia-031";
+                                maxC3="us-ia-045";
+                                maxC4="us-ia-167";
+                                maxC5="us-ia-027";}
+                                
+                                
+                            
+                            window.maxC1=maxC1;
+                                window.maxC2=maxC2;
+                                window.maxC3=maxC3;
+                                window.maxC4=maxC4;
+                                window.maxC5=maxC5;
+                                if(this.properties['hc-key']==maxC1){
+         this.value=responsejson1[0].totalPower;
+                                 
+            
+        }
+        else if(this.properties['hc-key']==maxC2){
+            this.value=responsejson1[1].totalPower;
+            
+        }
+        else if(this.properties['hc-key']==maxC3){
+            this.value=responsejson1[2].totalPower;
+            
+        }
+        else if(this.properties['hc-key']==maxC4){
+            this.value=responsejson1[3].totalPower;
+            
+        }
+        else if(this.properties['hc-key']==maxC5){
+            this.value=responsejson1[4].totalPower;
+            
+        }
+                                else
+                                    this.value=0;
+                                var totfinal=0;
+                                totfinal=responsejson1[1].totalPower+responsejson1[2].totalPower+responsejson1[3].totalPower+responsejson1[4].totalPower;
+                                max1SP=  Math.ceil((responsejson1[0].totalPower/totfinal )*100);
+                                max2SP=  Math.ceil((responsejson1[1].totalPower/totfinal )*100);
+                                max3SP=  Math.ceil((responsejson1[2].totalPower/totfinal )*100);
+                                max4SP=  Math.ceil((responsejson1[3].totalPower/totfinal )*100);
+                                max5SP=  Math.ceil((responsejson1[4].totalPower/totfinal )*100);
+            /*{
+                max5=max4;
+                max4=max3;
+                max3=max2;
+                max2=max1;
+                max1=i;
+                maxC5=maxC4;
+                maxC4=maxC3;
+                maxC3=maxC2;
+                maxC2=maxC1;
+                maxC1=this.properties['hc-key'];
+                
+                
+            }
+        else if(max2<=this.value)
+            {
+                max5=max4;
+                max4=max3;
+                max3=max2;
+                max2=i;
+                maxC5=maxC4;
+                maxC4=maxC3;
+                maxC3=maxC2;
+                maxC2=this.properties['hc-key'];
+                
+            }
+        else if(max3<=this.value)
+            {
+                max5=max4;
+                max4=max3;
+                max3=i;
+                maxC5=maxC4;
+                maxC4=maxC3;
+                maxC3=this.properties['hc-key'];
+                
+            }
+        else if(max4<=this.value)
+            {
+                max5=max4;
+                max4=i;
+                maxC5=maxC4;
+                maxC4=this.properties['hc-key'];
+                
+            }
+        else if(max5<=this.value)
+            {
+                max5=i;
+                maxC5=this.properties['hc-key'];
+                
+            }*/                        
+                                
+
+                                 document.getElementById("demo1").innerHTML=data[max1].name;    
+                     document.getElementById("demo2").innerHTML=data[max2].name;
+                     document.getElementById("demo3").innerHTML=data[max3].name;    
+                     document.getElementById("demo4").innerHTML=data[max4].name;
+                     document.getElementById("demo5").innerHTML=data[max5].name;
+                                
+                     /*document.getElementById("demo1").innerHTML=max1;    
+                     document.getElementById("demo2").innerHTML=max2;
+                     document.getElementById("demo3").innerHTML=max3;    
+                     document.getElementById("demo4").innerHTML=max4;
+                     document.getElementById("demo5").innerHTML=max5;*/
+                    document.getElementById("demo11").innerHTML=Math.ceil((responsejson1[0].totalPower));    
+                     document.getElementById("demo21").innerHTML=Math.ceil((responsejson1[1].totalPower));;
+                     document.getElementById("demo31").innerHTML=Math.ceil((responsejson1[2].totalPower));;    
+                     document.getElementById("demo41").innerHTML=Math.ceil((responsejson1[3].totalPower));;
+                     document.getElementById("demo51").innerHTML=Math.ceil((responsejson1[4].totalPower));;
+                     // percent power print
+                     document.getElementById("demo12").innerHTML=max1SP;    
+                     document.getElementById("demo22").innerHTML=max2SP;
+                     document.getElementById("demo32").innerHTML=max3SP;
+                     document.getElementById("demo42").innerHTML=max4SP;
+                     document.getElementById("demo52").innerHTML=max5SP;           
+                    
+                                
+                     // total power print
+                                
+                            });
+
+                            // Hide loading and add series
+                            chart.hideLoading();
+                            clearTimeout(fail);
+                            chart.addSeriesAsDrilldown(e.point, {
+                                name: e.point.name,
+                                data: data,
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.name}'
+                                }
+                            });
+                        });
+                    }
+
+
+                    this.setTitle(null, { text: e.point.name })
+                    ;
+                    
+                },
+                drillup: function () {
+                    setTimeout(function(){ myFun5() }, 2000);
+                    location.hash = "";
+                    document.getElementById("PriorityHeader").innerHTML="<center>Top Priority States</center>",
+                    this.setTitle(null, { text: 'United States' });
+                    
+                    /*var z1=document.getElementById('Backbutton');
+                    z1.addEventListener("click",function(){document.getElementById("bulidingsicon").style.opacity = "1";});*/
+                    var chart12 = $('#container1').highcharts();// charts on the right made dynamic 
+                        var seriesLength = chart12.series.length;
+                        for(var i = seriesLength -1; i > -1; i--) {
+                            chart12.series[i].remove();
+                        }
+                        this.disabled = true;
+                            
+                            chart12.addSeries({
+                            type: 'bar',
+                            name: 'Power in PWs',
+                            data: [totGas,totEle],
+                            color :'#7cb5ec',                    
+                        });
+                    $( '#priorityTable1').hide();
+                    $( '#priorityTable').show();
+                    $( '#toOverView').hide();
+                    
+                    
+                   document.getElementById("demo11").innerHTML=Math.ceil((responsejson[0].totalPower)/(1024*1024));    
+                     document.getElementById("demo21").innerHTML=Math.ceil((responsejson[1].totalPower)/(1024*1024));    
+                     document.getElementById("demo31").innerHTML=Math.ceil((responsejson[2].totalPower)/(1024*1024));    
+                     document.getElementById("demo41").innerHTML=Math.ceil((responsejson[3].totalPower)/(1024*1024));    
+                     document.getElementById("demo51").innerHTML=Math.ceil((responsejson[4].totalPower)/(1024*1024));    
+                     // percent power print
+                     document.getElementById("demo12").innerHTML=max1P;    
+                     document.getElementById("demo22").innerHTML=max2P;
+                     document.getElementById("demo32").innerHTML=max3P;
+                     document.getElementById("demo42").innerHTML=max4P;
+                     document.getElementById("demo52").innerHTML=max5P;
+    
+                    
+                    
+                    document.getElementById("demo1").onmouseover = function() {
+        document.getElementById(maxS1).style.fill="#99cc00";
+                   $('.highcharts-key-us-tx-333').css({ fill: "#99cc00" });} 
+       
+        document.getElementById("demo1").onmouseout = function() {
+        document.getElementById(maxS1).style.fill=top1;} 
+       
+        
+        //2nd in table
+        document.getElementById("demo2").onmouseover = function() {
+        document.getElementById(maxS2).style.fill="#99cc00";} 
+       
+        document.getElementById("demo2").onmouseout = function() {
+        document.getElementById(maxS2).style.fill=top2;} 
+       
+        document.getElementById("demo3").onmouseover = function() {
+        document.getElementById(maxS3).style.fill="#99cc00";} 
+       
+        document.getElementById("demo3").onmouseout = function() {
+        document.getElementById(maxS3).style.fill=top3;}
+        
+        document.getElementById("demo4").onmouseover = function() {
+        document.getElementById(maxS4).style.fill="#99cc00";} 
+       
+        document.getElementById("demo4").onmouseout = function() {
+        document.getElementById(maxS4).style.fill=top4;} 
+       
+        document.getElementById("demo5").onmouseover = function() {
+        document.getElementById(maxS5).style.fill="#99cc00";} 
+       
+        document.getElementById("demo5").onmouseout = function() {
+        document.getElementById(maxS5).style.fill=top5;} 
+                    
+                    /*$('#Backbutton').on('click',function(){
+                                       console.log('calling'); 
+                        });*/
+                   /* var z1=document.getElementById('Backbutton');
+                    z1.addEventListener("click",function(){document.getElementById("bulidingsicon").style.opacity = "1";});*/
+                   // console.log('called');
+                    function myFun2(){
+   // console.log('inside 2');
+                     /*document.getElementById("demo1").innerHTML=data[max1].name;    
+                     document.getElementById("demo2").innerHTML=data[max2].name;
+                     document.getElementById("demo3").innerHTML=data[max3].name;    
+                     document.getElementById("demo4").innerHTML=data[max4].name;
+                     document.getElementById("demo5").innerHTML=data[max5].name;*/
+    
+                     
+           }
+                 /*  
+                     z1.exonclick = z1.onclick;
+        z1.onclick = function (oEvent) {
+            if (this.exonclick) {
+                this.exonclick(oEvent);
+            }
+            //
+            alert("hello2");
+        }*/
+    
+                    /*$("tspan:contains(School)").hover(function(){location.href = "diff_buildings3.html";});
+                     $("tspan:contains(Restaurant)").hover(function(){location.href = "diff_buildings3.html";});
+                    */
+                    
+                    
+                   // window.onload=myFun5(); 
+                }
+            }
+        },
+        credits:{
+            enabled:false
+        },
+
+        title : {
+            text : 'Power Consumption Heat Map'
+        },
+
+        subtitle: {
+            text: 'United States',
+            floating: true,
+            align: 'right',
+            y: 50,
+            style: {
+                fontSize: '16px'
+            }
+        },
+
+        legend: small ? {} : {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+        colorAxis: {
+            min: 0,
+            minColor: '#ffebe5',
+            maxColor: '#991f00'
+        },
+
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+
+        plotOptions: {
+            map: {
+                states: {
+                    hover: {
+                        color: '#EEDD66'
+                    }
+                }
+            }
+        },
+
+        series : [{
+            data : data,
+            name: 'USA',
+            dataLabels: {
+                enabled: true,
+                format: '{point.properties.postal-code}'
+            }
+        }, 
+                  {
+                name: 'Cities',
+                type: 'mappoint',
+                data: cities,
+                color: 'black',
+                marker: {
+                    radius: 2
+                },
+                dataLabels: {
+                    align: 'left',
+                    verticalAlign: 'middle'
+                },
+                animation: false,
+                tooltip: {
+                    pointFormat: '{point.name}'
+                }
+            }],
+
+        drilldown: {
+            //series: drilldownSeries,
+            activeDataLabelStyle: {
+                color: '#FFFFFF',
+                textDecoration: 'none',
+                textShadow: '0 0 3px #000000'
+            },
+            drillUpButton: {
+                relativeTo: 'spacingBox',
+                position: {
+                    x: 0,
+                    y: 60
+                }
+            }
+        }
+    });
+    window.data=data;
+             
+    
+    
+    
+});
+   $( document ).ready(function() {
+                               
+       
+
+       
+       $('#buildingBack').click(function(){
+       $( '#toOverView').hide();
+        $( '#priorityTable1').show();       
+       });
+     $('#h11').click(function(){
+    $( '#priorityTable1').hide();
+         document.getElementById('stateOV').innerHTML="State - "+sessionStorage.getItem('state');;
+         document.getElementById('cityOV').innerHTML="City - "+sessionStorage.getItem('city');
+         sessionStorage.setItem('building', 'FullServiceRestaurant');
+         document.getElementById('buildingOV').innerHTML="Building - "+sessionStorage.getItem('building');
+         
+          $( '#toOverView').show();
+  });
+       $('#h55').click(function(){
+    $( '#priorityTable1').hide();
+         document.getElementById('stateOV').innerHTML="State - "+sessionStorage.getItem('state');;
+         document.getElementById('cityOV').innerHTML="City - "+sessionStorage.getItem('city');
+         sessionStorage.setItem('building', 'QuickServiceRestaurant');
+         document.getElementById('buildingOV').innerHTML="Building - "+sessionStorage.getItem('building');
+         
+          $( '#toOverView').show();
+  });
+       $('#h22').click(function(){
+    $( '#priorityTable1').hide();
+         document.getElementById('stateOV').innerHTML="State - "+sessionStorage.getItem('state');;
+         document.getElementById('cityOV').innerHTML="City - "+sessionStorage.getItem('city');
+         sessionStorage.setItem('building', 'PrimarySchool');
+         document.getElementById('buildingOV').innerHTML="Building - "+sessionStorage.getItem('building');
+         
+          $( '#toOverView').show();
+  });
+       $('#h33').click(function(){
+    $( '#priorityTable1').hide();
+         document.getElementById('stateOV').innerHTML="State - "+sessionStorage.getItem('state');;
+         document.getElementById('cityOV').innerHTML="City - "+sessionStorage.getItem('city');
+         sessionStorage.setItem('building', 'SuperMarket');
+         document.getElementById('buildingOV').innerHTML="Building - "+sessionStorage.getItem('building');
+         
+          $( '#toOverView').show();
+  });
+       $('#h44').click(function(){
+    $( '#priorityTable1').hide();
+         document.getElementById('stateOV').innerHTML="State - "+sessionStorage.getItem('state');;
+         document.getElementById('cityOV').innerHTML="City - "+sessionStorage.getItem('city');
+         sessionStorage.setItem('building', 'LargeHotel ');
+         document.getElementById('buildingOV').innerHTML="Building - "+sessionStorage.getItem('building');
+         
+          $( '#toOverView').show();
+  });
+       $( '#toOverView').hide();
+          
+  $('h1').click(function(){
+    localStorage.setItem( 'building',($(this).text()) );
+  });
+
+       
+       /* var flag1=0;
+       
+       $("#h11").click(function () {
+    flag1=1;
+});
+           $("#h22").click(function () {
+    flag1=2;
+});
+           $("#h33").click(function () {
+    flag1=3;
+});
+           $("#h44").click(function () {
+    flag1=4;
+});
+           $("#h55").click(function () {
+    flag1=5;
+});
+       if(flag1==1){
+       var e1 = document.getElementById('h11');
+e1.onclick = sessionStorage.setItem('building', 'FullServiceRestaurant');
+       }
+       if(flag1==2){
+       var e2 = document.getElementById('h22');
+e2.onclick = sessionStorage.setItem('building', 'PrimarySchool');
+       }
+       if(flag1==3){
+       var e3 = document.getElementById('h33');
+e3.onclick = sessionStorage.setItem('building', 'SuperMarket');
+       }
+       if(flag1==4){
+       var e4 = document.getElementById('h44');
+e4.onclick = sessionStorage.setItem('building', 'LargeHotel ');
+       }
+       if(flag1=5){
+       var e5 = document.getElementById('h55');
+e5.onclick = sessionStorage.setItem('building', 'QuickServiceRestaurant');
+       }*/
+       $( '#priorityTable1').hide();
+      /* 
+       $('a[href*="us"]').each(function() {
+    console.log('Contains US');*/
+           if($('a:contains("map")').length) {
+console.log("my link exists")};
+
+      
+       
+        /*document.getElementsByClassName('highcharts-name-hospital highcharts-key-us-tx-435').click(function(){$('.highcharts-key-us-tx-435').append('<a href="diff_buildings.html"></a>')}) */// to give href //for buildingds
+       
+      /* $('.highcharts-key-us-tx-435').on('click',function(){location.href = "diff_buildings3.html"; });*/
+       var i=0;
+       $.each(data, function () {
+         this.drilldown = this.properties['hc-key'];
+        if(this.properties['hc-key']==maxS1){
+         this.value=responsejson[0].totalPower;
+            max1=i;
+        }
+        else if(this.properties['hc-key']==maxS2){
+            this.value=responsejson[1].totalPower;
+            max2=i;
+        }
+        else if(this.properties['hc-key']==maxS3){
+            this.value=responsejson[2].totalPower;
+            max3=i;
+        }
+        else if(this.properties['hc-key']==maxS4){
+            this.value=responsejson[3].totalPower;
+            max4=i;
+        }
+        else if(this.properties['hc-key']==maxS5){
+            this.value=responsejson[4].totalPower;
+            max5=i;
+        }
+    
+                    var x1=document.getElementsByClassName('highcharts-drilldown-point')[i];
+        var att = document.createAttribute("id");
+        att.value=this.properties['hc-key'];
+        
+        x1.setAttributeNode(att);
+           i++;
+                     
+    
+var item1 = document.getElementById(maxS1);
+var item2 = document.getElementById(maxS2);           
+var item3 = document.getElementById(maxS3);
+var item4 = document.getElementById(maxS4);           
+var item5 = document.getElementById(maxS5);
+           window.item1=item1;
+           window.item2=item2;
+           window.item3=item3;
+           window.item4=item4;
+           window.item5=item5;
+           
+
+           
+$('table.mytable tbody').on('click',function(){$(item1).css("style", "background-color:blue;")}); 
+           $('table.mytable tbody').on('click',function(){$(item2).css("style", "background-color:blue;")}); 
+           $('table.mytable tbody').on('click',function(){$(item3).css("style", "background-color:blue;")});
+           $('table.mytable tbody').on('click',function(){$(item4).css("style", "background-color:blue;")}); 
+           $('table.mytable tbody').on('click',function(){$(item5).css("style", "background-color:blue;")});
+           
+           
+        
+})
+       myFun1();
+                    // total power print
+                     /*document.getElementById("demo11").innerHTML=x[max1];    
+                     document.getElementById("demo21").innerHTML=x[max2];
+                     document.getElementById("demo31").innerHTML=x[max3];
+                     document.getElementById("demo41").innerHTML=x[max4];
+                     document.getElementById("demo51").innerHTML=x[max5];
+       
+                     // percent power print
+                     document.getElementById("demo12").innerHTML=max1P;    
+                     document.getElementById("demo22").innerHTML=max2P;
+                     document.getElementById("demo32").innerHTML=max3P;    
+                     document.getElementById("demo42").innerHTML=max4P;
+                     document.getElementById("demo52").innerHTML=max5P;*/
+       
+       
+        //code to get the css fill for the path variable
+       var element1 = document.getElementById(maxS1),
+    style = window.getComputedStyle(element1),
+    top1 = style.getPropertyValue('fill');
+       
+       var element2 = document.getElementById(maxS2),
+    style = window.getComputedStyle(element2),
+    top2 = style.getPropertyValue('fill');
+       
+       var element3 = document.getElementById(maxS3),
+    style = window.getComputedStyle(element3),
+    top3 = style.getPropertyValue('fill');
+       
+       var element4 = document.getElementById(maxS4),
+    style = window.getComputedStyle(element4),
+    top4 = style.getPropertyValue('fill');
+       
+       var element5 = document.getElementById(maxS5),
+    style = window.getComputedStyle(element5),
+    top5 = style.getPropertyValue('fill');
+       window.top1=top1;
+       window.top2=top2;
+       window.top3=top3;
+       window.top4=top4;
+       window.top5=top5;
+       
+       //table to Map highlighting for State
+       
+              document.getElementById("demo01").onmouseover = function() {
+       $(".highcharts-key-"+maxC1).css({ fill: "#99cc00" });}
+
+               document.getElementById("demo01").onmouseout = function() {
+       $(".highcharts-key-"+maxC1).css({ fill: top1 });}
+
+               document.getElementById("demo02").onmouseover = function() {
+       $(".highcharts-key-"+maxC2).css({ fill: "#99cc00" });}
+
+               document.getElementById("demo02").onmouseout = function() {
+       $(".highcharts-key-"+maxC2).css({ fill: top2 });}
+     
+               document.getElementById("demo03").onmouseover = function() {
+       $(".highcharts-key-"+maxC3).css({ fill: "#99cc00" });}
+
+               document.getElementById("demo03").onmouseout = function() {
+       $(".highcharts-key-"+maxC3).css({ fill: top3 });}
+               
+               document.getElementById("demo04").onmouseover = function() {
+       $(".highcharts-key-"+maxC4).css({ fill: "#99cc00" });}
+
+               document.getElementById("demo04").onmouseout = function() {
+       $(".highcharts-key-"+maxC4).css({ fill: top4 });}
+               
+               document.getElementById("demo05").onmouseover = function() {
+       $(".highcharts-key-"+maxC5).css({ fill: "#99cc00" });}
+
+               document.getElementById("demo05").onmouseout = function() {
+       $(".highcharts-key-"+maxC5).css({ fill: top5 });}
+               
+       
+       
+       
+        $("tspan:contains(Anchorage)").click(function(){
+        
+
+               document.getElementById("demo01").onmouseover = function() {
+       $(".highcharts-key-"+maxC2).css({ fill: top2 });}
+           
+
+               document.getElementById("demo02").onmouseover = function() {
+       $(".highcharts-key-"+maxC2).css({ fill: top2 });}
+     
+
+               document.getElementById("demo03").onmouseover = function() {
+       $(".highcharts-key-"+maxC3).css({ fill: top3 });}
+               
+               
+
+               document.getElementById("demo04").onmouseover = function() {
+       $(".highcharts-key-"+maxC4).css({ fill: top4 });}
+           
+               document.getElementById("demo05").onmouseover = function() {
+       $(".highcharts-key-"+maxC5).css({ fill: top5 });}});;
+       
+       
+       
+       
+       
+       
+       $("tspan:contains(Dothan)").click(function(){
+        
+
+               document.getElementById("demo01").onmouseover = function() {
+       $(".highcharts-key-"+maxC2).css({ fill: top2 });}
+           
+
+               document.getElementById("demo02").onmouseover = function() {
+       $(".highcharts-key-"+maxC2).css({ fill: top2 });}
+     
+
+               document.getElementById("demo03").onmouseover = function() {
+       $(".highcharts-key-"+maxC3).css({ fill: top3 });}
+               
+               
+
+               document.getElementById("demo04").onmouseover = function() {
+       $(".highcharts-key-"+maxC4).css({ fill: top4 });}
+           
+               document.getElementById("demo05").onmouseover = function() {
+       $(".highcharts-key-"+maxC5).css({ fill: top5 });}});;
+       
+       
+       
+       
+       $("tspan:contains(Birmingham)").click(function(){
+        
+
+               document.getElementById("demo01").onmouseover = function() {
+       $(".highcharts-key-"+maxC2).css({ fill: top2 });}
+           
+
+               document.getElementById("demo02").onmouseover = function() {
+       $(".highcharts-key-"+maxC2).css({ fill: top2 });}
+     
+
+               document.getElementById("demo03").onmouseover = function() {
+       $(".highcharts-key-"+maxC3).css({ fill: top3 });}
+               
+               
+
+               document.getElementById("demo04").onmouseover = function() {
+       $(".highcharts-key-"+maxC4).css({ fill: top4 });}
+           
+               document.getElementById("demo05").onmouseover = function() {
+       $(".highcharts-key-"+maxC5).css({ fill: top5 });}});;
+       
+       
+                                                                                      
+                                                                                      
+
+
+       //table to map highlighting for Country
+       document.getElementById("demo1").onmouseover = function() {
+        document.getElementById(maxS1).style.fill="#99cc00";
+       } 
+       
+        document.getElementById("demo1").onmouseout = function() {
+        document.getElementById(maxS1).style.fill=top1;} 
+       
+        
+        //2nd in table
+        document.getElementById("demo2").onmouseover = function() {
+        document.getElementById(maxS2).style.fill="#99cc00";} 
+       
+        document.getElementById("demo2").onmouseout = function() {
+        document.getElementById(maxS2).style.fill=top2;} 
+       
+        document.getElementById("demo3").onmouseover = function() {
+        document.getElementById(maxS3).style.fill="#99cc00";} 
+       
+        document.getElementById("demo3").onmouseout = function() {
+        document.getElementById(maxS3).style.fill=top3;} 
+        
+        document.getElementById("demo4").onmouseover = function() {
+        document.getElementById(maxS4).style.fill="#99cc00";} 
+       
+        document.getElementById("demo4").onmouseout = function() {
+        document.getElementById(maxS4).style.fill=top4;} 
+       
+        document.getElementById("demo5").onmouseover = function() {
+        document.getElementById(maxS5).style.fill="#99cc00";} 
+       
+        document.getElementById("demo5").onmouseout = function() {
+        document.getElementById(maxS5).style.fill=top5;} 
+        
+        $('#LinktOCassandra').click(function(){
+        
+      $.ajax({ 
+         url:'http://liacm218:8181/buildingload/getstreamingdata/'+window.sessionStorage.getItem('state')+'/'+window.sessionStorage.getItem('city')+'/'+window.sessionStorage.getItem('building'),
+                           type : "POST",
+                             })
+
+                       });
+       
+          });        
+            
+		</script>
+		
+	</head>
+	<body>
+	<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom:0;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+          <a class="navbar-brand" href="#">
+                  <span class="logoHolder"></span>
+              </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <!--<ul class="nav navbar-nav">-->
+            
+                 <form class="navbar-form navbar-right searchbox ng-pristine ng-valid" style="margin-right:0%;">
+                <input class="form-control" id="search" style="width: 60%;" type="text" placeholder="Search">
+                <button class="btn btn-info" id="Sbutton" onclick="searchNode()" type="button">Search</button>
+                </form>
+                  
+                    <ul class="nav navbar-nav" style="float:right">
+                        
+                     <li >
+                     <a href="BuildMain.html">My Home</a>
+                  </li>
+                        <li>
+                     <a href="login.html">Sign Out</a>
+                  </li>
+        
+              </ul>
+        <!--/.nav-collapse -->
+                
+            
+           
+			
+			          
+         <!-- </ul>-->
+        </div><!--/.nav-collapse -->
+    </nav> 
+      <div class="row col-lg-12">
+    <div class="col-lg-8">
+        <div class="panel panel-default" style="height:100%;">
+     <div id="container" style="min-height:820px;max-height: 850px; width:100%;min-width: 410px; max-width: 1200px; margin: 0 auto"></div>
+      </div>
+      </div>
+          <div class="col-lg-4">
+        <div class="panel panel-default" style="height:310px;">
+     <div id="container1" ></div>
+      </div>
+              <div id="priorityTable">
+    <table class="mytable mytable-head">
+    <tr>
+        <td width="100%" style="font-size:18px" id="PriorityHeader"><center>Top Priority States</center></td>
+      
+    </tr>
+  </table>
+        <table class="mytable mytable-body1">
+    <tr >
+      <td width="40%"  id="Priortycol1">State</td>
+        <td width="30%" id="TGMwatt" >Total Power(TWs)</td>
+      <td width="30%" >Power Percent</td>
+    </tr>
+  </table>
+  <table class="mytable mytable-body" id="demo01">
+    <tr style="background: #d98c8c">
+      <td width="40%" id="demo1" >50</td>
+        <td width="30%" id="demo11">30</td>
+      <td width="30%" id="demo12">30</td>
+    </tr>
+  </table>
+  <table class="mytable mytable-body" id="demo02">
+    <tr style="background: #d98c8c">
+      <td width="40%" id="demo2">16</td>
+      <td width="30%" id="demo21">20</td>
+      <td width="30%" id="demo22">20</td>
+    </tr>
+  </table>
+  <table class="mytable mytable-body" id="demo03">
+    <tr style="background: #d98c8c">
+      <td width="40% "id="demo3">20</td>
+      <td width="30%" id="demo31">20</td>
+      <td width="30%" id="demo32">20</td>
+    </tr>
+  </table> 
+    <table class="mytable mytable-body" id="demo04">
+        <tr style="background: #d98c8c">
+          <td width="40% "id="demo4">20</td>
+          <td width="30%" id="demo41">20</td>
+          <td width="30%" id="demo42">10</td>
+        </tr>
+      </table>
+    <table class="mytable mytable-body" id="demo05">
+        <tr style="background: #d98c8c">
+          <td width="40% "id="demo5">20</td>
+          <td width="30%" id="demo51">10</td>
+          <td width="30%" id="demo52">10</td>
+        </tr>
+      </table>
+              </div>
+               <div id="priorityTable1">
+    <table class="mytable mytable-head">
+    <tr>
+        <td width="100%" style="font-size:18px" id="PriorityHeader1" onclick="myFun3()"><center>List of Buildings</center></td>
+      
+    </tr>
+  </table>
+        <table class="mytable mytable-body1">
+    <tr >
+      <td width="40%"  id="Priortycol1">Building</td>
+        <td width="30%" id="TGMwatt" >Total Power(MWs)</td>
+      <td width="30%" >Power Percent</td>
+    </tr>
+  </table>
+  <table class="mytable mytable-body" id="h11">
+    <tr style="background: #d98c8c">
+      <td width="40%" id="h1" ><p>FullServiceRestaurant</p></td>
+        <td width="30%" id="demo11">30</td>
+      <td width="30%" id="demo12">30</td>
+    </tr>
+  </table>
+  <table class="mytable mytable-body" id="h22">
+    <tr style="background: #d98c8c">
+      <td width="40%" id="h2"><p>PrimarySchool</p></td>
+      <td width="30%" id="demo21">20</td>
+      <td width="30%" id="demo22">20</td>
+    </tr>
+  </table>
+  <table class="mytable mytable-body" id="h33">
+    <tr style="background: #d98c8c">
+      <td width="40% "id="h3"><p>SuperMarket</p></td>
+      <td width="30%" id="demo31">20</td>
+      <td width="30%" id="demo32">20</td>
+    </tr>
+  </table> 
+    <table class="mytable mytable-body" id="h44">
+        <tr style="background: #d98c8c">
+          <td width="40% "id="h4"><p>LargeHotel </p></td>
+          <td width="30%" id="demo41">20</td>
+          <td width="30%" id="demo42">20</td>
+        </tr>
+      </table>
+    <table class="mytable mytable-body" id="h55">
+        <tr style="background: #d98c8c">
+          <td width="40% "id="h5"><p>QuickServiceRestaurant</p></td>
+          <td width="30%" id="demo51">10</td>
+          <td width="30%" id="demo52">10</td>
+        </tr>
+      </table>
+              </div>
+              <div class="panel panel-default">
+                   <div id="toOverView" style="font-size:16px;">
+                       <div class="row"><button id="buildingBack" style="float: right;margin-right: 5%";>Back to Buildings</button></div>
+                  <center><p id="stateOV"></p>
+                  <p id="cityOV"></p>
+                  <p id="buildingOV"></p>
+                      <p  onclick="RestCall()"   id="LinktOCassandra"><a href='diff_buildings31.html'>Click Here</a> to view Building DashBoard</p></center></div>
+                  </div>
+                  
+             
+        
+       <!-- <div class="panel panel-default" style="height:167px;margin-top:40px" >
+        <div class="col-lg-3 col-md-6"><div class="row">
+            <div class=col-lg-4>
+             </div>
+            <div class=col-lg-4>Recommendations
+             </div>
+            <div class=col-lg-4>
+             </div>
+
+            </div>
+        </div>
+            </div>-->
+
+            </div>
+      </div>
+         <div class="col-lg-12" style="background: #337ab7;">
+        <footer>
+  <p style="float: right;margin-top: 0.5%;"><b>Powered By EMC VSD Bangalore</b></p>
+</footer>
+        </div>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/> 
+
+
+             <!--All the scripts directly returnede in this file is moved to this file-->
+             <script src="../js/myScript1.js"></script>
+	</body>
+ 
+</html>
